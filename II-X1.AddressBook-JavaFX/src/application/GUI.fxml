@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MyController">
+   <children>
+      <SplitPane dividerPositions="0.650375939849624" layoutX="127.0" layoutY="148.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+        <items>
+          <AnchorPane fx:id="leftAnch" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TextField fx:id="searchFld" maxHeight="-Infinity" minHeight="-Infinity" onKeyReleased="#searchContact" prefHeight="25.0" promptText="Search for:" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0" />
+                  <TableView fx:id="tabView" onKeyTyped="#editContact" onMouseClicked="#editContact" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="45.0">
+                     <columns>
+                        <TableColumn fx:id="firstNameTab" minWidth="100.0" prefWidth="-1.0" text="First Name" />
+                        <TableColumn fx:id="lastNameTab" minWidth="100.0" prefWidth="-1.0" text="Last Name" />
+                        <TableColumn fx:id="addressTab" minWidth="150.0" prefWidth="-1.0" text="Address" />
+                        <TableColumn fx:id="phoneTab" minWidth="110.0" prefWidth="-1.0" text="Phone" />
+                        <TableColumn fx:id="mailTab" minWidth="140.0" prefWidth="-1.0" text="Mail" />
+                     </columns>
+                     <contextMenu>
+                        <ContextMenu>
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#removeContact" text="Delete contact" />
+                           </items>
+                        </ContextMenu>
+                     </contextMenu>
+                     <placeholder>
+                        <Label text="No contact to show..." />
+                     </placeholder>
+                  </TableView>
+                  <Button fx:id="delBtn" layoutX="615.0" layoutY="101.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" onAction="#removeContact" prefHeight="24.0" prefWidth="24.0" text="X" visible="false">
+                     <font>
+                        <Font size="12.0" />
+                     </font></Button>
+               </children>
+            </AnchorPane>
+          <AnchorPane>
+               <children>
+                  <Button fx:id="allEntriesBtn" maxHeight="-Infinity" maxWidth="315.0" minHeight="-Infinity" minWidth="315.0" mnemonicParsing="false" onAction="#showAllEntries" prefHeight="25.0" text="Show all entries" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0" />
+                  <Label text="First Name:" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <TextField fx:id="firstName" maxHeight="-Infinity" minHeight="-Infinity" onKeyReleased="#searchExistingContact" prefHeight="25.0" promptText="set" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0" />
+                  <Label text="Last Name:" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="140.0">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <TextField fx:id="lastName" maxHeight="-Infinity" minHeight="-Infinity" onKeyReleased="#searchExistingContact" prefHeight="25.0" promptText="set" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="165.0" />
+                  <Label text="Address:" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="210.0">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <TextField fx:id="address" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" promptText="set" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="235.0" />
+                  <Label text="Phone:" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="280.0">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <TextField fx:id="phone" maxHeight="-Infinity" minHeight="-Infinity" onKeyReleased="#searchContact" prefHeight="25.0" promptText="set" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="305.0" />
+                  <Label text="Mail:" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="350.0">
+                    <font>
+                     <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <TextField fx:id="mail" maxHeight="-Infinity" minHeight="25.0" prefHeight="25.0" promptText="set" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="375.0" />
+                  <Button fx:id="newEntryBtn" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#newEntry" prefHeight="25.0" prefWidth="150.0" text="New entry" visible="false" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="430.0" />
+                  <Button fx:id="changeBtn" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#confirmEdit" prefHeight="25.0" prefWidth="150.0" text="Change " visible="false" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="430.0" />
+                  <Button fx:id="addBtn" layoutX="50.0" layoutY="428.0" maxHeight="-Infinity" maxWidth="315.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#addDetails" prefHeight="25.0" text="Add" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="430.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <MenuBar prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem fx:id="saveItem" mnemonicParsing="false" onAction="#save" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAndExit" text="Save and exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#close" text="Exit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Views">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showChart" text="Show chart" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
