@@ -85,7 +85,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Views">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showChart" text="Show chart" />
+                  <MenuItem mnemonicParsing="false" onAction="#showWindow" text="Show chart" />
                </items>
             </Menu>
          </menus>

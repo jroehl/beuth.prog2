@@ -11,7 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -81,9 +84,17 @@ public class MyController {
 	@FXML
 	private AnchorPane leftAnch;
 	@FXML
-	private LineChart<Integer, String> lineChart;
-	
+	private CategoryAxis catAxis;
+	@FXML
+	private AnchorPane chartViewWindow;
+	@FXML
+	private LineChart<String, Integer> lineChart;
+	@FXML
+	private Button view1Btn;
+	@FXML
+	private Button view2Btn;
 
+	
 	AddressBookInterfaceNew addBook = new AddressBook();
 	String tempSearchString = null;
 	
@@ -96,6 +107,7 @@ public class MyController {
 	 * erstellt. Dieses wird an die add() Methode des Adressbuchs übergeben.
 	 * Danach wird showAllEntries() und clearEntryField() aufgerufen.
 	 */
+	
 	public void addDetails() throws NullPointerException {
 		try {
 			if (lastName.getText().isEmpty() & firstName.getText().isEmpty()
@@ -107,6 +119,7 @@ public class MyController {
 						firstName.getText(), address.getText(),
 						phone.getText(), mail.getText());
 				addBook.add(details);
+//				save();
 				showAllEntries();
 				clearEntryField();
 			}
@@ -193,8 +206,8 @@ public class MyController {
 				addBtn.setText("Add?");
 				if (addBook.search(firstName.getText().toLowerCase()) != null) {
 					fillList(addBook.search(firstName.getText().toLowerCase()));
-					fillList(addBook.search(firstName.getText().toLowerCase() + " "
-							+ lastName.getText().toLowerCase()));
+					fillList(addBook.search(firstName.getText().toLowerCase()
+							+ " " + lastName.getText().toLowerCase()));
 					// Probleme andere Rechner
 					addBtn.setOnAction((event) -> {
 						Alert alert = new Alert(AlertType.WARNING);
@@ -239,7 +252,8 @@ public class MyController {
 	 */
 	public void removeContact() {
 		try {
-			ContactDetails contact = tabView.getSelectionModel().getSelectedItem();
+			ContactDetails contact = tabView.getSelectionModel()
+					.getSelectedItem();
 			addBook.removeContact(contact.genKey());
 			delBtn.setVisible(false);
 			switchButtons();
@@ -425,17 +439,34 @@ public class MyController {
 		timeline.play();
 	}
 	
-	public void showChart() {
-        	try{
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/ChartView.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.initStyle(StageStyle.UNDECORATED);
-                stage.setScene(new Scene(root1));  
-                stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	} 
+	
+	/*
+	 * Öffnet neues Fenster mit der Anzeigemöglichkeit von Charts
+	 */
+	public void showWindow() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
+					"/application/ChartView.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initStyle(StageStyle.UNIFIED);
+			stage.setScene(new Scene(root1));
+			stage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void fillChart() {
+		Series<String, Integer> series = new XYChart.Series<String, Integer>();
+		series.setName("Entries");
+		for (ContactDetails entry : addBook.getDetails("#")) {
+		series.getData().add(new XYChart.Data<String, Integer>(entry.getFirstName().charAt(0) + ". " + entry.getLastName().charAt(0)+ ".", entry.genKey().length()));
+		}
+		lineChart.setAnimated(false);
+		lineChart.getData().add(series);
+		view1Btn.setOnAction((event) -> {
+		});
+	}
 }

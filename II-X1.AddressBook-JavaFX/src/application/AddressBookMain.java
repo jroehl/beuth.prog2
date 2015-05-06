@@ -13,12 +13,10 @@ public class AddressBookMain extends Application {
 	 * Erzeugt das JavaFX Hauptfenster.
 	 */
 
-	public static Stage stage1;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			stage1 = primaryStage;
 			Parent root = FXMLLoader.load(getClass().getResource(
 					"/application/GUI.fxml"));
 			Scene scene = new Scene(root);
@@ -32,8 +30,10 @@ public class AddressBookMain extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (Exception e) {
-			
+		System.out.println(e.getCause());
+			System.out.println(e.getMessage());
 		}
+		
 	}
 
 	public static void main(String[] args) {
