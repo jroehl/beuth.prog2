@@ -2,30 +2,39 @@ package addressBook;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ContactDetails {
 
 	private String[] list = new String[5];
 	private SimpleStringProperty lastName, firstName, address, phone, mail;
+	private String lastNameString, firstNameString, addressString, phoneString, mailString;
+	ObservableList<String> olist = FXCollections.observableArrayList(list);
 
 	/*
 	 * Konstruktor bekommt 5 Strings übergeben, erstellt jeweils ein
 	 * SimpleStringProperty und übergibt diese an die entsprechende Stelle des
 	 * Arrays.
 	 */
-	public ContactDetails(String lastName1, String firstNameIN,
+	public ContactDetails(String lastNameIN, String firstNameIN,
 			String addressIN, String phoneIN, String mailIN)
 			throws IllegalArgumentException {
-		lastName = new SimpleStringProperty(lastName1);
+		lastName = new SimpleStringProperty(lastNameIN);
 		firstName = new SimpleStringProperty(firstNameIN);
 		address = new SimpleStringProperty(addressIN);
 		phone = new SimpleStringProperty(phoneIN);
 		mail = new SimpleStringProperty(mailIN);
-		list[0] = lastName1;
+		list[0] = lastNameIN;
 		list[1] = firstNameIN;
 		list[2] = addressIN;
 		list[3] = phoneIN;
 		list[4] = mailIN;
+		lastNameString = lastNameIN;
+		firstNameString = firstNameIN;
+		addressString = addressIN;
+		phoneString = phoneIN;
+		mailString = mailIN;
 
 		for (int i = 0; i < list.length; i++)
 			if (list[i] == null)

@@ -13,7 +13,6 @@ public class AddressBookMain extends Application {
 	 * Erzeugt das JavaFX Hauptfenster.
 	 */
 
-
 	@Override
 	public void start(Stage primaryStage) {
 		try {
