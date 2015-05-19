@@ -111,26 +111,6 @@ public class BackupMyController implements Initializable {
 		showAllEntries();	
 	}
 	
-	public void createTableView() {
-		
-		firstNameCol = new TableColumn<ContactDetails, String>("First Name");
-        lastNameCol = new TableColumn<ContactDetails, String>("Last Name");
-        addressCol = new TableColumn<ContactDetails, String>("Address");
-        phoneCol = new TableColumn<ContactDetails, String>("Phone");
-        mailCol = new TableColumn<ContactDetails, String>("Mail");
-        firstNameCol.setMinWidth(100.0);
-        lastNameCol.setMinWidth(100.0);
-        addressCol.setMinWidth(150.0);
-        phoneCol.setMinWidth(110.0);
-        mailCol.setMinWidth(140.0);
-        table.getColumns().addAll(firstNameCol, lastNameCol, addressCol, phoneCol, mailCol);
-        AnchorPane.setBottomAnchor(table, 10.0);
-        AnchorPane.setRightAnchor(table, 30.0);
-        AnchorPane.setTopAnchor(table, 45.0);
-        AnchorPane.setLeftAnchor(table, 10.0);
-		leftAnch.getChildren().addAll(table);
-	}
-	
 	/*
 	 * Fügt den jeweilig zugehörigen Text (firstName : firstNameTab) in die
 	 * Textfelder ein.
@@ -235,7 +215,6 @@ public class BackupMyController implements Initializable {
 	 * allEntriesBtn.
 	 */
 	public void showAllEntries() {
-		createTableView();
 		fillList(addBook.getDetails("#"));
 		allEntriesBtn.setText("Show all " + addBook.getNumberOfEntries()
 				+ " entries");
@@ -248,7 +227,6 @@ public class BackupMyController implements Initializable {
 	 * allEntriesBtn.
 	 */
 	public void searchContact() {
-		createTableView();
 		try {
 			delBtn.setVisible(false);
 			fillList(addBook.search(searchFld.getText().toLowerCase()));

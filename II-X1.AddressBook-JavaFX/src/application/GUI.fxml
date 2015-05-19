@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MyController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MyController">
    <children>
       <SplitPane dividerPositions="0.650375939849624" layoutX="127.0" layoutY="148.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
         <items>
@@ -67,6 +67,7 @@
             <Menu mnemonicParsing="false" text="Views">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#showWindow" text="Show chart" />
+                  <MenuItem mnemonicParsing="false" onAction="#showListView" text="Show ListView" />
                </items>
             </Menu>
          </menus>

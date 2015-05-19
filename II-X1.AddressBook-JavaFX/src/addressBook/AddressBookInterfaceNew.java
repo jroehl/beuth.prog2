@@ -1,6 +1,7 @@
 package addressBook;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javafx.collections.ObservableList;
 
@@ -58,4 +59,5 @@ public interface AddressBookInterfaceNew {
 	public abstract boolean keyInUse(String key)
 			throws IllegalArgumentException;
 
+	public Set<String> getKeys();
 }

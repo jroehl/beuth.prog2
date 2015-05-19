@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javafx.collections.FXCollections;
@@ -229,5 +230,9 @@ public class AddressBook implements AddressBookInterfaceNew {
 			return true;
 		}
 		return false;
+	}
+	
+	public Set<String> getKeys() {
+		return addressBook.keySet();
 	}
 }

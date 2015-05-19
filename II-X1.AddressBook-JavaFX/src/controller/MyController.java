@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -96,13 +99,15 @@ public class MyController implements Initializable {
 	TableColumn<ContactDetails, String> phoneCol;
 	TableColumn<ContactDetails, String> mailCol;
 	
+	ListView<String> lView;
+	
 	public void initialize(URL location, ResourceBundle resources) {
 		createTableView();
-		showAllEntries();		
+		showAllEntries();
 	}
 	
 	
-	// <TableView fx:id="tabView" onKeyTyped="#editContact" onMouseClicked="#editContact" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="45.0" visible="false">
+	@SuppressWarnings("unchecked")
 	public void createTableView() {
 //		table.setEditable(true);
 		firstNameCol = new TableColumn<ContactDetails, String>("First Name");
@@ -135,6 +140,7 @@ public class MyController implements Initializable {
 	 * Fügt den jeweilig zugehörigen Text (firstName : firstNameTab) in die
 	 * Textfelder ein.
 	 */
+	
 	public void setEntryField() {
 		firstName.setText(firstNameCol.getCellData(table.getSelectionModel()
 				.getSelectedItem()));
@@ -169,6 +175,18 @@ public class MyController implements Initializable {
 //
 //		table.setItems(personData);
 //	}
+	
+	public void showListView() {
+		
+		Stage stage = new Stage();
+		Set<String> keyset = addBook.getKeys();
+		ObservableList<String> keys = FXCollections.observableArrayList();
+		keys.addAll(keyset);
+		lView = new ListView<String>();
+		lView.setItems(keys);
+		stage.setScene(new Scene(lView, 450, 200));
+		stage.showAndWait();
+	}
 	
 	public void fillList(ObservableList<ContactDetails> personData) {
 
@@ -485,7 +503,6 @@ public class MyController implements Initializable {
 				ae -> obj.setText(text)));
 		timeline.play();
 	}
-	
 	
 	/*
 	 * Öffnet neues Fenster mit der Anzeigemöglichkeit von Charts
