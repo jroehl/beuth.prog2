@@ -66,8 +66,8 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Views">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showWindow" text="Show chart" />
-                  <MenuItem mnemonicParsing="false" onAction="#showListView" text="Show ListView" />
+                  <MenuItem mnemonicParsing="false" onAction="#showLineChart" text="Show Keylength LineChart" />
+                  <MenuItem mnemonicParsing="false" onAction="#showListView" text="Show Keys ListView" />
                </items>
             </Menu>
          </menus>

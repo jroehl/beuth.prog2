@@ -13,12 +13,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Alert;
@@ -34,9 +34,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import addressBook.AddressBook;
 import addressBook.AddressBookInterfaceNew;
@@ -63,8 +61,6 @@ public class MyController implements Initializable {
 	@FXML
 	private Button allEntriesBtn;
 	@FXML
-	private Button testBtn;
-	@FXML
 	private Button changeBtn;
 	@FXML
 	private Button newEntryBtn;
@@ -78,69 +74,60 @@ public class MyController implements Initializable {
 	private MenuItem saveItem;
 	@FXML
 	private AnchorPane leftAnch;
-	@FXML
-	private CategoryAxis catAxis;
-	@FXML
-	private AnchorPane chartViewWindow;
-	@FXML
-	private LineChart<String, Integer> lineChart;
-	@FXML
-	private Button view1Btn;
-	@FXML
-	private Button view2Btn;
 
 	AddressBookInterfaceNew addBook = new AddressBook();
 	String tempSearchString = null;
-	
-	private TableView<ContactDetails> table = new TableView<ContactDetails>();
-	TableColumn<ContactDetails, String> firstNameCol;
-	TableColumn<ContactDetails, String> lastNameCol;
-	TableColumn<ContactDetails, String> addressCol;
-	TableColumn<ContactDetails, String> phoneCol;
-	TableColumn<ContactDetails, String> mailCol;
-	
-	ListView<String> lView;
-	
+
+	private TableView<ContactDetails> table;
+	private TableColumn<ContactDetails, String> firstNameCol;
+	private TableColumn<ContactDetails, String> lastNameCol;
+	private TableColumn<ContactDetails, String> addressCol;
+	private TableColumn<ContactDetails, String> phoneCol;
+	private TableColumn<ContactDetails, String> mailCol;
+
 	public void initialize(URL location, ResourceBundle resources) {
 		createTableView();
 		showAllEntries();
 	}
-	
-	
-	@SuppressWarnings("unchecked")
+
+	/*
+	 * Create the Table View
+	 */
 	public void createTableView() {
-//		table.setEditable(true);
+		table = new TableView<ContactDetails>();
+		// table.setEditable(true);
 		firstNameCol = new TableColumn<ContactDetails, String>("First Name");
-        lastNameCol = new TableColumn<ContactDetails, String>("Last Name");
-        addressCol = new TableColumn<ContactDetails, String>("Address");
-        phoneCol = new TableColumn<ContactDetails, String>("Phone");
-        mailCol = new TableColumn<ContactDetails, String>("Mail");
-//        firstNameCol.setEditable(true);
-//        lastNameCol.setEditable(true);
-//        addressCol.setEditable(true);
-//        phoneCol.setEditable(true);
-//        mailCol.setEditable(true);
-        firstNameCol.setMinWidth(100.0);
-        lastNameCol.setMinWidth(100.0);
-        addressCol.setMinWidth(150.0);
-        phoneCol.setMinWidth(110.0);
-        mailCol.setMinWidth(140.0);
-        table.setOnMouseClicked((event) -> {
-        	editContact();
-        });
-        table.getColumns().addAll(firstNameCol, lastNameCol, addressCol, phoneCol, mailCol);
-        AnchorPane.setBottomAnchor(table, 10.0);
-        AnchorPane.setRightAnchor(table, 30.0);
-        AnchorPane.setTopAnchor(table, 45.0);
-        AnchorPane.setLeftAnchor(table, 10.0);
+		lastNameCol = new TableColumn<ContactDetails, String>("Last Name");
+		addressCol = new TableColumn<ContactDetails, String>("Address");
+		phoneCol = new TableColumn<ContactDetails, String>("Phone");
+		mailCol = new TableColumn<ContactDetails, String>("Mail");
+		// firstNameCol.setEditable(true);
+		// lastNameCol.setEditable(true);
+		// addressCol.setEditable(true);
+		// phoneCol.setEditable(true);
+		// mailCol.setEditable(true);
+		firstNameCol.setMinWidth(100.0);
+		lastNameCol.setMinWidth(100.0);
+		addressCol.setMinWidth(150.0);
+		phoneCol.setMinWidth(110.0);
+		mailCol.setMinWidth(140.0);
+		table.setOnMouseClicked((event) -> {
+			editContact();
+		});
+		table.getColumns().addAll(firstNameCol, lastNameCol, addressCol,
+				phoneCol, mailCol);
+		AnchorPane.setBottomAnchor(table, 10.0);
+		AnchorPane.setRightAnchor(table, 30.0);
+		AnchorPane.setTopAnchor(table, 45.0);
+		AnchorPane.setLeftAnchor(table, 10.0);
 		leftAnch.getChildren().addAll(table);
 	}
-	
+
 	/*
 	 * Fügt den jeweilig zugehörigen Text (firstName : firstNameTab) in die
 	 * Textfelder ein.
 	 */
-	
+
 	public void setEntryField() {
 		firstName.setText(firstNameCol.getCellData(table.getSelectionModel()
 				.getSelectedItem()));
@@ -159,46 +146,82 @@ public class MyController implements Initializable {
 	 * Lambda Ausdruck den jeweiligen StringProperty. Setzt die an die Methode
 	 * übergebene ObservableList aus ContactDetails in die Tabelle ein.
 	 */
-	
-//	public void fillList(ObservableList<ContactDetails> personData) {
-//
-//		firstNameCol.setCellValueFactory(cellData -> cellData.getValue()
-//				.getFirstNameProp());
-//		lastNameCol.setCellValueFactory(cellData -> cellData.getValue()
-//				.getLastNameProp());
-//		addressCol.setCellValueFactory(cellData -> cellData.getValue()
-//				.getAddressProp());
-//		phoneCol.setCellValueFactory(cellData -> cellData.getValue()
-//				.getPhoneProp());
-//		mailCol.setCellValueFactory(cellData -> cellData.getValue()
-//				.getMailProp());
-//
-//		table.setItems(personData);
-//	}
-	
+
+	// public void fillList(ObservableList<ContactDetails> personData) {
+	//
+	// firstNameCol.setCellValueFactory(cellData -> cellData.getValue()
+	// .getFirstNameProp());
+	// lastNameCol.setCellValueFactory(cellData -> cellData.getValue()
+	// .getLastNameProp());
+	// addressCol.setCellValueFactory(cellData -> cellData.getValue()
+	// .getAddressProp());
+	// phoneCol.setCellValueFactory(cellData -> cellData.getValue()
+	// .getPhoneProp());
+	// mailCol.setCellValueFactory(cellData -> cellData.getValue()
+	// .getMailProp());
+	//
+	// table.setItems(personData);
+	// }
+
+	public void fillTableView(ObservableList<ContactDetails> personData) {
+
+		firstNameCol.setCellValueFactory(olistelem -> new SimpleStringProperty(
+				olistelem.getValue().getFirstName()));
+		lastNameCol.setCellValueFactory(olistelem -> new SimpleStringProperty(
+				olistelem.getValue().getLastName()));
+		addressCol.setCellValueFactory(olistelem -> new SimpleStringProperty(
+				olistelem.getValue().getAddress()));
+		phoneCol.setCellValueFactory(olistelem -> new SimpleStringProperty(
+				olistelem.getValue().getPhone()));
+		mailCol.setCellValueFactory(olistelem -> new SimpleStringProperty(
+				olistelem.getValue().getMail()));
+
+		table.setItems(personData);
+	}
+
+	/*
+	 * Öffnet neues Fenster mit der ListView und füllt diese
+	 */
 	public void showListView() {
-		
+
 		Stage stage = new Stage();
 		Set<String> keyset = addBook.getKeys();
 		ObservableList<String> keys = FXCollections.observableArrayList();
 		keys.addAll(keyset);
-		lView = new ListView<String>();
+		ListView<String> lView = new ListView<String>();
 		lView.setItems(keys);
 		stage.setScene(new Scene(lView, 450, 200));
 		stage.showAndWait();
 	}
-	
-	public void fillList(ObservableList<ContactDetails> personData) {
 
-		firstNameCol.setCellValueFactory(olistelem -> new SimpleStringProperty(olistelem.getValue().getFirstName()));
-		lastNameCol.setCellValueFactory(olistelem -> new SimpleStringProperty(olistelem.getValue().getLastName()));
-		addressCol.setCellValueFactory(olistelem -> new SimpleStringProperty(olistelem.getValue().getAddress()));
-		phoneCol.setCellValueFactory(olistelem -> new SimpleStringProperty(olistelem.getValue().getPhone()));
-		mailCol.setCellValueFactory(olistelem -> new SimpleStringProperty(olistelem.getValue().getMail()));
-
-		table.setItems(personData);
+	/*
+	 * Öffnet neues Fenster mit dem LineChart und füllt diesen
+	 */
+	public void showLineChart() {
+		Stage LineChartStage = new Stage();
+		Series<String, Number> series = new XYChart.Series<String, Number>();
+		series.setName("Entries");
+		for (ContactDetails entry : addBook.getDetails("#")) {
+			series.getData().add(
+					new XYChart.Data<String, Number>(entry.getFirstName()
+							.charAt(0)
+							+ ". "
+							+ entry.getLastName().charAt(0)
+							+ ".", entry.genKey().length()));
+		}
+		CategoryAxis catAxis = new CategoryAxis();
+		catAxis.setLabel("Names");
+		catAxis.setSide(Side.BOTTOM);
+		NumberAxis numAxis = new NumberAxis();
+		numAxis.setSide(Side.LEFT);
+		LineChart<String, Number> lineChart = new LineChart<String, Number>(
+				catAxis, numAxis);
+		lineChart.setAnimated(true);
+		lineChart.getData().add(series);
+		LineChartStage.setScene(new Scene(lineChart, 500, 250));
+		LineChartStage.showAndWait();
 	}
-	
+
 	/*
 	 * Testet durch eine if-else Schleife, ob die Eingabefelder leer sind. Wenn
 	 * alle Felder leer sind wird die Methode showtemp() mit den Werten für den
@@ -208,7 +231,7 @@ public class MyController implements Initializable {
 	 * erstellt. Dieses wird an die add() Methode des Adressbuchs übergeben.
 	 * Danach wird showAllEntries() und clearEntryField() aufgerufen.
 	 */
-	
+
 	public void addDetails() throws NullPointerException {
 		try {
 			if (lastName.getText().isEmpty() & firstName.getText().isEmpty()
@@ -220,7 +243,7 @@ public class MyController implements Initializable {
 						firstName.getText(), address.getText(),
 						phone.getText(), mail.getText());
 				addBook.add(details);
-//				save();
+				// save();
 				showAllEntries();
 				clearEntryField();
 			}
@@ -265,7 +288,7 @@ public class MyController implements Initializable {
 	 * allEntriesBtn.
 	 */
 	public void showAllEntries() {
-		fillList(addBook.getDetails("#"));
+		fillTableView(addBook.getDetails("#"));
 		allEntriesBtn.setText("Show all " + addBook.getNumberOfEntries()
 				+ " entries");
 	}
@@ -279,7 +302,7 @@ public class MyController implements Initializable {
 	public void searchContact() {
 		try {
 			delBtn.setVisible(false);
-			fillList(addBook.search(searchFld.getText().toLowerCase()));
+			fillTableView(addBook.search(searchFld.getText().toLowerCase()));
 			allEntriesBtn.setText("Show all " + addBook.getNumberOfEntries()
 					+ " entries");
 		} catch (IllegalArgumentException e) {
@@ -306,9 +329,12 @@ public class MyController implements Initializable {
 			if (addBook.search(firstName.getText().toLowerCase()) != null) {
 				addBtn.setText("Add?");
 				if (addBook.search(firstName.getText().toLowerCase()) != null) {
-					fillList(addBook.search(firstName.getText().toLowerCase()));
-					fillList(addBook.search(firstName.getText().toLowerCase()
-							+ " " + lastName.getText().toLowerCase()));
+					fillTableView(addBook.search(firstName.getText()
+							.toLowerCase()));
+					fillTableView(addBook.search(firstName.getText()
+							.toLowerCase()
+							+ " "
+							+ lastName.getText().toLowerCase()));
 					// Probleme andere Rechner
 					addBtn.setOnAction((event) -> {
 						Alert alert = new Alert(AlertType.WARNING);
@@ -467,8 +493,6 @@ public class MyController implements Initializable {
 		address.clear();
 	}
 
-	
-
 	/*
 	 * Benutzt die an die Methode übergebenen Werte: Erstellt eine
 	 * FadeTransition, setzt das Objekt auf sichtbar. Setzt Start und Endwert
@@ -503,36 +527,5 @@ public class MyController implements Initializable {
 				ae -> obj.setText(text)));
 		timeline.play();
 	}
-	
-	/*
-	 * Öffnet neues Fenster mit der Anzeigemöglichkeit von Charts
-	 */
-	public void showWindow() {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-					"/application/ChartView.fxml"));
-			Parent root1 = (Parent) fxmlLoader.load();
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initStyle(StageStyle.UNIFIED);
-			stage.setScene(new Scene(root1));
-			stage.showAndWait();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void fillChart() {
-		Series<String, Integer> series = new XYChart.Series<String, Integer>();
-		series.setName("Entries");
-		for (ContactDetails entry : addBook.getDetails("#")) {
-		series.getData().add(new XYChart.Data<String, Integer>(entry.getFirstName().charAt(0) + ". " + entry.getLastName().charAt(0)+ ".", entry.genKey().length()));
-		}
-		lineChart.setAnimated(false);
-		lineChart.getData().add(series);
-		view1Btn.setOnAction((event) -> {
-		});
-	}
 
-	
 }
