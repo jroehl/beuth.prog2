@@ -29,9 +29,11 @@ public class AddressBook implements AddressBookInterfaceNew {
 		addressBook = new TreeMap<String, ContactDetails>();
 		Properties properties = new Properties();
 		try {
-			properties.load(new FileInputStream("data.properties"));
+			properties
+					.load(new FileInputStream(
+							"/Users/bodowissemann/Documents/workspace/beuth_programmieren_2/II-X1.AddressBook-JavaFX/data.properties"));
 		} catch (IOException e) {
-			System.out.println("File not found!");
+			System.out.println("File not found!!");
 			System.exit(0);
 		}
 		for (String key : properties.stringPropertyNames()) {
@@ -231,7 +233,7 @@ public class AddressBook implements AddressBookInterfaceNew {
 		}
 		return false;
 	}
-	
+
 	public Set<String> getKeys() {
 		return addressBook.keySet();
 	}
