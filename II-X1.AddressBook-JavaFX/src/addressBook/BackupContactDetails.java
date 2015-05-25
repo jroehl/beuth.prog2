@@ -1,11 +1,15 @@
 package addressBook;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ContactDetails {
+public class BackupContactDetails {
 
 	private String[] list = new String[5];
+	private SimpleStringProperty lastName, firstName, address, phone, mail;
+	private String lastNameString, firstNameString, addressString, phoneString, mailString;
 	ObservableList<String> olist = FXCollections.observableArrayList(list);
 
 	/*
@@ -13,14 +17,24 @@ public class ContactDetails {
 	 * SimpleStringProperty und übergibt diese an die entsprechende Stelle des
 	 * Arrays.
 	 */
-	public ContactDetails(String lastNameIN, String firstNameIN,
+	public BackupContactDetails(String lastNameIN, String firstNameIN,
 			String addressIN, String phoneIN, String mailIN)
 			throws IllegalArgumentException {
+		lastName = new SimpleStringProperty(lastNameIN);
+		firstName = new SimpleStringProperty(firstNameIN);
+		address = new SimpleStringProperty(addressIN);
+		phone = new SimpleStringProperty(phoneIN);
+		mail = new SimpleStringProperty(mailIN);
 		list[0] = lastNameIN;
 		list[1] = firstNameIN;
 		list[2] = addressIN;
 		list[3] = phoneIN;
 		list[4] = mailIN;
+		lastNameString = lastNameIN;
+		firstNameString = firstNameIN;
+		addressString = addressIN;
+		phoneString = phoneIN;
+		mailString = mailIN;
 
 		for (int i = 0; i < list.length; i++)
 			if (list[i] == null)
@@ -37,12 +51,28 @@ public class ContactDetails {
 		list[0] = name1;
 	}
 
+	public StringProperty getLastNameProp() {
+		return lastName;
+	}
+
+	public void setLastNameProp(String lastNameProp1) {
+		lastName.set(lastNameProp1);
+	}
+
 	public String getFirstName() {
 		return list[1];
 	}
 
 	public void setFirstName(String firstName1) {
 		list[1] = firstName1;
+	}
+
+	public StringProperty getFirstNameProp() {
+		return firstName;
+	}
+
+	public void setFirstNameProp(String firstNameProp1) {
+		firstName.set(firstNameProp1);
 	}
 
 	public String getAddress() {
@@ -53,6 +83,14 @@ public class ContactDetails {
 		list[2] = address1;
 	}
 
+	public StringProperty getAddressProp() {
+		return address;
+	}
+
+	public void setAddressProp(String addressProp1) {
+		address.set(addressProp1);
+	}
+
 	public String getPhone() {
 		return list[3];
 	}
@@ -61,12 +99,28 @@ public class ContactDetails {
 		list[3] = phone1;
 	}
 
+	public StringProperty getPhoneProp() {
+		return phone;
+	}
+
+	public void setPhoneProp(String phoneProp1) {
+		phone.set(phoneProp1);
+	}
+
 	public String getMail() {
 		return list[4];
 	}
 
 	public void setMail(String mail1) {
 		list[4] = mail1;
+	}
+
+	public StringProperty getMailProp() {
+		return mail;
+	}
+
+	public void setMailProp(String mailProp1) {
+		mail.set(mailProp1);
 	}
 
 	public String[] getList() {
