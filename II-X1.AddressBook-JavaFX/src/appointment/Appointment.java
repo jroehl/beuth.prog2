@@ -1,82 +1,188 @@
 package appointment;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Appointment {
 	
 	private SimpleStringProperty dateContent, category;
-	private SimpleIntegerProperty length;
-	private SimpleObjectProperty<Date> startTime, endTime;
+	private ObjectBinding<Long> duration;
+	private ObjectBinding<LocalDateTime> startDateTime, endDateTime;
+	private SimpleStringProperty startDate, endDate, startTime, endTime;
 
-	public Appointment(String dateContentIN,String startTimeIN,String endTimeIN, String startDateIN, String endDateIN, String categoryIN) throws TimeException {
+	public Appointment(String dateContentIN,String startTimeIN,String endTimeIN, String startDateIN, String endDateIN, String categoryIN) throws IllegalTimeException, ParseException {
 		dateContent = new SimpleStringProperty(dateContentIN);
-		
-		SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-	
-		Date startTimeDate = null;
-		Date endTimeDate = null;
-
 		category = new SimpleStringProperty(categoryIN);
+		startDate = new SimpleStringProperty(startDateIN);
+		startTime = new SimpleStringProperty(startTimeIN);
+		endDate = new SimpleStringProperty(endDateIN);
+		endTime = new SimpleStringProperty(endTimeIN);
 		
-		try {
-			startTimeDate = simpleDateTimeFormat.parse(startDateIN+" "+startTimeIN);
-			endTimeDate = simpleDateTimeFormat.parse(endDateIN+" "+endTimeIN);
-		}
-		catch (ParseException ex)
-        {
-            System.out.println("Exception "+ex); // Has to be caught and processed
-        }
+		startDateTime = new ObjectBinding<LocalDateTime>() {
+			{ bind(startDate, startTime) ;}
+			protected LocalDateTime computeValue() {
+				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+				LocalDateTime timeDateTime = LocalDateTime.parse(startDate.get()+" "+startTime.get(), dateTimeFormatter);
+				return timeDateTime;
+			}
+		};
 		
-		startTime = new SimpleObjectProperty<Date>(startTimeDate);
-		endTime = new SimpleObjectProperty<Date>(endTimeDate);
+		endDateTime = new ObjectBinding<LocalDateTime>() {
+			{ bind(endDate, endTime) ;}
+			protected LocalDateTime computeValue() {
+				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+				LocalDateTime timeDateTime = LocalDateTime.parse(endDate.get()+" "+endTime.get(), dateTimeFormatter);
+				return timeDateTime;
+			}
+		};
 		
-		// Binding length : endTime - startTime
-		length = new SimpleIntegerProperty((int)((endTimeDate.getTime()/60000) - (startTimeDate.getTime()/60000)));
+		duration = new ObjectBinding<Long>() {
+			{ bind(startDateTime, endDateTime) ;}
+			protected Long computeValue() {
+				return startDateTime.get().until(endDateTime.get(), ChronoUnit.MINUTES);
+			}
+		};
 		
-		if(startTimeDate.compareTo(endTimeDate)>0) {
-			throw new TimeException();
+		if (startDateTime.get().isAfter(endDateTime.get())) {
+			throw new IllegalTimeException();
+    	}
+	}
+	
+	public SimpleStringProperty getDateContentProperty() {
+		return dateContent;
+	}
+	
+	public String getDateContent() {
+		return dateContent.get();
+	}
+
+	public void setDateContent(String dateContent) {
+		this.dateContent.set(dateContent);
+	}
+
+	public SimpleStringProperty getCategoryProperty() {
+		return category;
+	}
+	
+	public String getCategory() {
+		return category.get();
+	}
+
+	public void setCategory(String category) {
+		this.category.set(category);
+	}
+
+	public ObjectBinding<LocalDateTime> getStartDateTimeBinding() {
+		return startDateTime;
+	}
+	
+	public String getStartDateTime() {
+		return startDateTime.get().toString();
+	}
+
+	public ObjectBinding<LocalDateTime> getEndDateTimeBinding() {
+		return endDateTime;
+	}
+	
+	public String getEndDateTime() {
+		return endDateTime.get().toString();
+	}
+
+	public SimpleStringProperty getStartDateProperty() {
+		return startDate;
+	}
+	
+	public String getStartDate() {
+		return startDate.get();
+	}
+
+	public void setStartDate(String startDate) throws IllegalTimeException, ParseException {
+		this.startDate.set(startDate);
+		if (startDateTime.get().isAfter(endDateTime.get())) {
+			throw new IllegalTimeException();
     	}
 	}
 
-	public SimpleStringProperty getDateContent() {
-		return dateContent;
+	public SimpleStringProperty getEndDateProperty() {
+		return endDate;
+	}
+	
+	public String getEndDate() {
+		return endDate.get();
 	}
 
-	public void setDateContent(SimpleStringProperty dateContent) {
-		this.dateContent = dateContent;
+	public void setEndDate(String endDate) throws IllegalTimeException, ParseException {
+		this.endDate.set(endDate);
+		if (startDateTime.get().isAfter(endDateTime.get())) {
+			throw new IllegalTimeException();
+    	}
 	}
 
-	public SimpleStringProperty getCategory() {
-		return category;
-	}
-
-	public void setCategory(SimpleStringProperty category) {
-		this.category = category;
-	}
-
-	public SimpleObjectProperty<Date> getStartTime() {
+	public SimpleStringProperty getStartTimeProperty() {
 		return startTime;
 	}
 
-	public void setStartTime(SimpleObjectProperty<Date> startTime) {
-		this.startTime = startTime;
+	public String getStartTime() {
+		return startTime.get();
 	}
-
-	public SimpleObjectProperty<Date> getEndTime() {
+	
+	public void setStartTime(String startTime) throws IllegalTimeException, ParseException {
+		this.startTime.set(startTime);
+		if (startDateTime.get().isAfter(endDateTime.get())) {
+			throw new IllegalTimeException();
+    	}
+	}
+	
+	public SimpleStringProperty getEndTimeProperty() {
 		return endTime;
 	}
-
-	public void setEndTime(SimpleObjectProperty<Date> endTime) {
-		this.endTime = endTime;
+	
+	public String getEndTime() {
+		return endTime.get();
 	}
 
-	public SimpleIntegerProperty getLength() {
-		return length;
+	public void setEndTime(String endTime) throws IllegalTimeException, ParseException {
+		this.endTime.set(endTime);
+		if (startDateTime.get().isAfter(endDateTime.get())) {
+			throw new IllegalTimeException();
+    	}
 	}
+
+	public Long[] getDurationSplit() {
+		
+		Long[] retArr = new Long[3];
+		
+		retArr[0] = (long) 0; // Minutes
+		retArr[1] = (long) 0; // Hours
+		retArr[2] = (long) 0; // Days
+		
+		if (duration.get() < 60) {
+			retArr[0] = duration.get();
+			return retArr; 
+		}
+	
+		if (duration.get() >= 60 & duration.get() < 1440) {
+			retArr[1] = duration.get() / 60;
+			retArr[0] = duration.get() % 60;
+			return retArr;
+		}	
+		else {
+			retArr[2] = duration.get() / 1440;
+			System.out.println(retArr[2]);
+			retArr[1] = (duration.get() - (retArr[2] * 1440)) / 60;
+			retArr[0] = (duration.get() - (retArr[2] * 1440)) % 60;
+			return retArr;
+		}
+	}
+
+	public Long getDurationMin() {
+		return duration.get();
+		
+	}
+
 }
