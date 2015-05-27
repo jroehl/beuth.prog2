@@ -95,17 +95,11 @@ public class MyController implements Initializable {
 	 */
 	public void createTableView() {
 		table = new TableView<ContactDetails>();
-		// table.setEditable(true);
 		firstNameCol = new TableColumn<ContactDetails, String>("First Name");
 		lastNameCol = new TableColumn<ContactDetails, String>("Last Name");
 		addressCol = new TableColumn<ContactDetails, String>("Address");
 		phoneCol = new TableColumn<ContactDetails, String>("Phone");
 		mailCol = new TableColumn<ContactDetails, String>("Mail");
-		// firstNameCol.setEditable(true);
-		// lastNameCol.setEditable(true);
-		// addressCol.setEditable(true);
-		// phoneCol.setEditable(true);
-		// mailCol.setEditable(true);
 		firstNameCol.setMinWidth(100.0);
 		lastNameCol.setMinWidth(100.0);
 		addressCol.setMinWidth(150.0);

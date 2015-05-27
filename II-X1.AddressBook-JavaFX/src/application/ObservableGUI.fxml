@@ -55,7 +55,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <MenuBar prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar fx:id="menuBar" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
@@ -67,7 +67,8 @@
             <Menu mnemonicParsing="false" text="Views">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#showLineChart" text="Show Keylength LineChart" />
-                  <MenuItem mnemonicParsing="false" onAction="#showListView" text="Show Keys ListView" />
+                  <MenuItem mnemonicParsing="false" onAction="#showKeysListView" text="Show Keys ListView" />
+                  <MenuItem mnemonicParsing="false" onAction="#showEditableListView" text="Show Editable ListView" />
                </items>
             </Menu>
          </menus>

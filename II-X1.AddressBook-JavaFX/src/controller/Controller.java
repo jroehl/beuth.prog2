@@ -27,11 +27,14 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -76,10 +79,12 @@ public class Controller implements Initializable {
 	private AnchorPane leftAnch;
 	@FXML
 	private AnchorPane rightAnch;
+	@FXML
+	private MenuBar menuBar;
 	
 
 	ObservableAddressBook addBook = new ObservableAddressBook();
-	String tempSearchString = null;
+	String tempKey = null;
 
 	private TableView<ObservableContactDetails> table;
 	private TableColumn<ObservableContactDetails, String> firstNameCol;
@@ -88,11 +93,10 @@ public class Controller implements Initializable {
 	private TableColumn<ObservableContactDetails, String> phoneCol;
 	private TableColumn<ObservableContactDetails, String> mailCol;
 
-	static String oldKey;
-	static int i = 0;
 	public void initialize(URL location, ResourceBundle resources) {
 		createTableView();
-		createButton();
+		createDefaultButton();
+		createPrintDataMenu();
 		showAllEntries();
 	}
 
@@ -109,30 +113,40 @@ public class Controller implements Initializable {
 		firstNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		firstNameCol.setOnEditCommit((event) -> {
 			table.getSelectionModel().getSelectedItem().setFirstNameProp(event.getNewValue());
+			ObservableContactDetails details = table.getSelectionModel().getSelectedItem();
+			addBook.changeContact(details, tempKey);
 			});
 		firstNameCol.setMinWidth(100.0);
 		lastNameCol = new TableColumn<ObservableContactDetails, String>("Last Name");
 		lastNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		lastNameCol.setOnEditCommit((event) -> {
-			table.getSelectionModel().getSelectedItem().setLastName(event.getNewValue());
+			table.getSelectionModel().getSelectedItem().setLastNameProp(event.getNewValue());
+			ObservableContactDetails details = table.getSelectionModel().getSelectedItem();
+			addBook.changeContact(details, tempKey);
 			});
 		lastNameCol.setMinWidth(100.0);
 		addressCol = new TableColumn<ObservableContactDetails, String>("Address");
 		addressCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		addressCol.setOnEditCommit((event) -> {
-			table.getSelectionModel().getSelectedItem().setAddress(event.getNewValue());
+			table.getSelectionModel().getSelectedItem().setAddressProp(event.getNewValue());
+			ObservableContactDetails details = table.getSelectionModel().getSelectedItem();
+			addBook.changeContact(details, tempKey);
 			});
 		addressCol.setMinWidth(150.0);
 		phoneCol = new TableColumn<ObservableContactDetails, String>("Phone");
 		phoneCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		phoneCol.setOnEditCommit((event) -> {
-			table.getSelectionModel().getSelectedItem().setPhone(event.getNewValue());
+			table.getSelectionModel().getSelectedItem().setPhoneProp(event.getNewValue());
+			ObservableContactDetails details = table.getSelectionModel().getSelectedItem();
+			addBook.changeContact(details, tempKey);
 			});
 		phoneCol.setMinWidth(110.0);
 		mailCol = new TableColumn<ObservableContactDetails, String>("Mail");
 		mailCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		mailCol.setOnEditCommit((event) -> {
-			table.getSelectionModel().getSelectedItem().setMail(event.getNewValue());
+			table.getSelectionModel().getSelectedItem().setMailProp(event.getNewValue());
+			ObservableContactDetails details = table.getSelectionModel().getSelectedItem();
+			addBook.changeContact(details, tempKey);
 			});
 		mailCol.setMinWidth(140.0);
 		table.setOnMouseClicked((event) -> {
@@ -147,11 +161,10 @@ public class Controller implements Initializable {
 		leftAnch.getChildren().addAll(table);
 	}
 	
-	public void createButton() {
+	public void createDefaultButton() {
 		Button defaultEntry = new Button("Default entry");
 		defaultEntry.setOnAction((event) -> {
-			ObservableContactDetails cdet = new ObservableContactDetails(i);
-			i++;
+			ObservableContactDetails cdet = new ObservableContactDetails();
 			addBook.add(cdet);
 			fillTableView(addBook.getDetails("#"));
 		});
@@ -160,6 +173,23 @@ public class Controller implements Initializable {
 		AnchorPane.setRightAnchor(defaultEntry, 10.0);
 		rightAnch.getChildren().add(defaultEntry);
 	}
+	
+	public void createPrintDataMenu() {
+		
+		MenuItem menuItem = new MenuItem("Print Data");
+		menuItem.setOnAction((event) -> {
+			for (ObservableContactDetails entry : addBook.getDetails("#")) {
+				System.out.println(entry.genKey());
+				System.out.println(entry.getFirstName() + "\t" + entry.getLastName() + "\t" +entry.getAddress() + "\t" +entry.getPhone() + "\t" +entry.getMail());
+				System.out.println("");
+			}
+		});
+		Menu menu = new Menu("Stats");
+		menu.getItems().add(menuItem);
+		menuBar.getMenus().add(menu);
+	}
+	
+	
 
 	/*
 	 * Fügt den jeweilig zugehörigen Text (firstName : firstNameTab) in die
@@ -167,12 +197,16 @@ public class Controller implements Initializable {
 	 */
 	
 	public void setEntryField() {
-		
-		firstName.textProperty().bind(table.getSelectionModel().getSelectedItem().getFirstNameProperty());
-		lastName.textProperty().bind(table.getSelectionModel().getSelectedItem().getLastNameProperty());
-		address.textProperty().bind(table.getSelectionModel().getSelectedItem().getAddressProperty());
-		phone.textProperty().bind(table.getSelectionModel().getSelectedItem().getPhoneProperty());
-		mail.textProperty().bind(table.getSelectionModel().getSelectedItem().getMailProperty());
+		firstName.setText(firstNameCol.getCellData(table.getSelectionModel()
+				.getSelectedItem()));
+		lastName.setText(lastNameCol.getCellData(table.getSelectionModel()
+				.getSelectedItem()));
+		address.setText(addressCol.getCellData(table.getSelectionModel()
+				.getSelectedItem()));
+		phone.setText(phoneCol.getCellData(table.getSelectionModel()
+				.getSelectedItem()));
+		mail.setText(mailCol.getCellData(table.getSelectionModel()
+				.getSelectedItem()));
 	}
 
 	/*
@@ -195,7 +229,7 @@ public class Controller implements Initializable {
 	/*
 	 * Öffnet neues Fenster mit der ListView und füllt diese
 	 */
-	public void showListView() {
+	public void showKeysListView() {
 
 		Stage stage = new Stage();
 		Set<String> keyset = addBook.getKeys();
@@ -203,6 +237,21 @@ public class Controller implements Initializable {
 		keys.addAll(keyset);
 		ListView<String> lView = new ListView<String>();
 		lView.setItems(keys);
+		stage.setScene(new Scene(lView, 450, 200));
+		stage.showAndWait();
+	}
+	
+	public void showEditableListView() {
+
+		Stage stage = new Stage();
+		ObservableList<String> entries = FXCollections.observableArrayList();
+		Set<String> keyset = addBook.getKeys();
+		entries.addAll(keyset);
+		ListView<String> lView = new ListView<String>();
+		lView.setCellFactory(ComboBoxListCell.forListView(entries));   
+		lView.setItems(entries);
+		lView.setEditable(true);
+//		lView.setCellFactory(TextFieldListCell.forListView());
 		stage.setScene(new Scene(lView, 450, 200));
 		stage.showAndWait();
 	}
@@ -216,12 +265,8 @@ public class Controller implements Initializable {
 		series.setName("Entries");
 		for (ContactDetails entry : addBook.getDetails("#")) {
 			series.getData().add(
-					new XYChart.Data<String, Number>(entry.getFirstName()
-							.charAt(0)
-							+ ". "
-							+ entry.getLastName().charAt(0)
-							+ ".", entry.genKey().length()));
-		}
+					new XYChart.Data<String, Number>(entry.getFirstName().charAt(0) + ". " + entry.getLastName().charAt(0) + ".", entry.genKey().length())); 
+			}
 		CategoryAxis catAxis = new CategoryAxis();
 		catAxis.setLabel("Names");
 		catAxis.setSide(Side.BOTTOM);
@@ -440,6 +485,7 @@ public class Controller implements Initializable {
 	 */
 	public void editContact() throws NullPointerException {
 		try {
+			
 			delBtn.setVisible(true);
 			int pos = table.getFocusModel().getFocusedCell().getRow() * 24;
 			setTooltip("delete contact", delBtn, 0.4);
@@ -448,8 +494,13 @@ public class Controller implements Initializable {
 			AnchorPane.setRightAnchor(delBtn, 6.0);
 			AnchorPane.setTopAnchor(delBtn, (double) (72 + (pos)));
 			fadeIn(delBtn, 0, 1, 1000);
+			firstName.clear();
+			lastName.clear();
+			address.clear();
+			phone.clear();
+			mail.clear();
 			setEntryField();
-			tempSearchString = table.getSelectionModel().getSelectedItem()
+			tempKey = table.getSelectionModel().getSelectedItem()
 					.genKey();
 			// addBtn.setDefaultButton(false);
 			addBtn.setVisible(false);
@@ -476,12 +527,12 @@ public class Controller implements Initializable {
 			ObservableContactDetails details = new ObservableContactDetails(lastName.getText(),
 					firstName.getText(), address.getText(), phone.getText(),
 					mail.getText());
-			if (details.genKey().equals(tempSearchString)) {
+			if (details.genKey().equals(tempKey)) {
 				showTemp("No change!", "Change", 1000, changeBtn);
 				// System.out.println("vorhanden");
 			} else {
 				try {
-					addBook.changeContact(details, tempSearchString);
+					addBook.changeContact(details, tempKey);
 					clearEntryField();
 					switchButtons();
 					// addBtn.setDefaultButton(true);

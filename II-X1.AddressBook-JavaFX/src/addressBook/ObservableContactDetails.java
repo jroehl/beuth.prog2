@@ -11,8 +11,8 @@ public class ObservableContactDetails extends ContactDetails {
 	private SimpleStringProperty lastName, firstName, address, phone, mail;
 	ObservableList<SimpleStringProperty> olist = FXCollections.observableArrayList(lastName, firstName, address, phone, mail);
 	
-	public ObservableContactDetails(int i) {
-		lastName = new SimpleStringProperty(i+"-");
+	public ObservableContactDetails() {
+		lastName = new SimpleStringProperty("-");
 		firstName = new SimpleStringProperty("-");
 		address = new SimpleStringProperty("-");
 		phone = new SimpleStringProperty("-");
@@ -107,6 +107,10 @@ public class ObservableContactDetails extends ContactDetails {
 	
 	public String genKey() {
 		return key.get();
+	}
+	
+	public ObservableList<SimpleStringProperty> getOList() {
+		return olist;
 	}
 
 }

@@ -97,7 +97,6 @@ public class ObservableAddressBook {
 		} catch (IllegalArgumentException e) {
 			System.out.println("No valid entry!");
 		}
-
 	}
 
 	/*
