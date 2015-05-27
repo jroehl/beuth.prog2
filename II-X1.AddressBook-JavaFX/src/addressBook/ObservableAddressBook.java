@@ -12,9 +12,9 @@ import java.util.TreeMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class AddressBook implements AddressBookInterfaceNew {
+public class ObservableAddressBook {
 
-	private TreeMap<String, ContactDetails> addressBook;
+	private TreeMap<String, ObservableContactDetails> addressBook;
 
 	/*
 	 * In dem Standardkonstruktor wird eine neue TreeMap erstellt. Die
@@ -25,14 +25,14 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * benutzt um ein neues ContactDetails Objekt zu erzeugen und in die TreeMap
 	 * einzufügen.
 	 */
-	public AddressBook() {
-		addressBook = new TreeMap<String, ContactDetails>();
+	public ObservableAddressBook() {
+		addressBook = new TreeMap<String, ObservableContactDetails>();
 		Properties properties = new Properties();
 		try {
 			// /Users/jroehl/Dropbox/Programmierung/GIT/Beuth_Programmieren_2/II-X1.AddressBook-JavaFX/data.properties
 			properties
 					.load(new FileInputStream(
-							"/Users/jroehl/Dropbox/Programmierung/GIT/Beuth_Programmieren_2/II-X1.AddressBook-JavaFX/data.properties"));
+							"data.properties"));
 		} catch (IOException e) {
 			System.out.println("File not found!!");
 			System.exit(0);
@@ -44,9 +44,9 @@ public class AddressBook implements AddressBookInterfaceNew {
 				tempList[n] = properties.get(key).toString().split("§")[n];
 				n++;
 			}
-			ContactDetails tempDet;
+			ObservableContactDetails tempDet;
 			try {
-				tempDet = new ContactDetails(tempList[0], tempList[1],
+				tempDet = new ObservableContactDetails(tempList[0], tempList[1],
 						tempList[2], tempList[3], tempList[4]);
 				addressBook.put(tempDet.genKey(), tempDet);
 			} catch (IllegalArgumentException e) {
@@ -64,10 +64,10 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * 
 	 * @see addressBook.AddressBookInterfaceNew#save()
 	 */
-	@Override
+	
 	public void save() throws IOException {
 		Properties properties = new Properties();
-		for (Map.Entry<String, ContactDetails> entry : addressBook.entrySet()) {
+		for (Map.Entry<String, ObservableContactDetails> entry : addressBook.entrySet()) {
 			properties.put(entry.getKey(), entry.getValue().getSaveContent());
 		}
 		try {
@@ -89,8 +89,7 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * 
 	 * @see addressBook.AddressBookInterfaceNew#add(addressBook.ContactDetails)
 	 */
-	@Override
-	public void add(ContactDetails details) throws IllegalArgumentException {
+	public void add(ObservableContactDetails details) throws IllegalArgumentException {
 		if (details == null)
 			throw new IllegalArgumentException();
 		try {
@@ -116,15 +115,14 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * 
 	 * @see addressBook.AddressBookInterfaceNew#getDetails(java.lang.String)
 	 */
-	@Override
-	public ObservableList<ContactDetails> getDetails(String key)
+	public ObservableList<ObservableContactDetails> getDetails(String key)
 			throws IllegalArgumentException {
 		if (key == null) {
 			throw new IllegalArgumentException();
 		}
-		ObservableList<ContactDetails> cdet = FXCollections
+		ObservableList<ObservableContactDetails> cdet = FXCollections
 				.observableArrayList();
-		for (Entry<String, ContactDetails> entry : addressBook.entrySet()) {
+		for (Entry<String, ObservableContactDetails> entry : addressBook.entrySet()) {
 			if (entry.getKey().contains(key)) {
 				cdet.add(addressBook.get(entry.getKey()));
 			}
@@ -142,15 +140,14 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * 
 	 * @see addressBook.AddressBookInterfaceNew#search(java.lang.String)
 	 */
-	@Override
-	public ObservableList<ContactDetails> search(String keyPrefix)
+	public ObservableList<ObservableContactDetails> search(String keyPrefix)
 			throws IllegalArgumentException {
 		if (keyPrefix == null) {
 			throw new IllegalArgumentException();
 		}
-		ObservableList<ContactDetails> cdet = FXCollections
+		ObservableList<ObservableContactDetails> cdet = FXCollections
 				.observableArrayList();
-		for (Entry<String, ContactDetails> entry : addressBook.entrySet()) {
+		for (Entry<String, ObservableContactDetails> entry : addressBook.entrySet()) {
 			if (entry.getValue().getContent().contains(keyPrefix)) {
 				cdet.add(addressBook.get(entry.getKey()));
 			}
@@ -173,8 +170,7 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * addressBook.AddressBookInterfaceNew#changeContact(addressBook.ContactDetails
 	 * , java.lang.String)
 	 */
-	@Override
-	public void changeContact(ContactDetails details, String removeThis)
+	public void changeContact(ObservableContactDetails details, String removeThis)
 			throws IllegalArgumentException {
 
 		if (removeThis == null || details == null) {
@@ -192,7 +188,6 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * 
 	 * @see addressBook.AddressBookInterfaceNew#getNumberOfEntries()
 	 */
-	@Override
 	public int getNumberOfEntries() {
 		return addressBook.keySet().size();
 	}
@@ -206,7 +201,6 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * 
 	 * @see addressBook.AddressBookInterfaceNew#removeContact(java.lang.String)
 	 */
-	@Override
 	public void removeContact(String key) throws IllegalArgumentException {
 		if (key == null) {
 			throw new IllegalArgumentException();
@@ -224,7 +218,6 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * 
 	 * @see addressBook.AddressBookInterfaceNew#keyInUse(java.lang.String)
 	 */
-	@Override
 	public boolean keyInUse(String key) throws IllegalArgumentException {
 		if (key == null) {
 			throw new IllegalArgumentException();
@@ -238,4 +231,5 @@ public class AddressBook implements AddressBookInterfaceNew {
 	public Set<String> getKeys() {
 		return addressBook.keySet();
 	}
+	
 }

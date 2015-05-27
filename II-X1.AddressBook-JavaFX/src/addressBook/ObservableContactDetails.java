@@ -1,10 +1,30 @@
 package addressBook;
 
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ObservableContactDetails extends ContactDetails {
 
+	private ObjectBinding<String> key;
 	private SimpleStringProperty lastName, firstName, address, phone, mail;
+	ObservableList<SimpleStringProperty> olist = FXCollections.observableArrayList(lastName, firstName, address, phone, mail);
+	
+	public ObservableContactDetails(int i) {
+		lastName = new SimpleStringProperty(i+"-");
+		firstName = new SimpleStringProperty("-");
+		address = new SimpleStringProperty("-");
+		phone = new SimpleStringProperty("-");
+		mail = new SimpleStringProperty("-");
+		
+		key = new ObjectBinding<String>() {
+			{ bind(lastName, firstName, address, phone, mail) ;}
+			protected String computeValue() {
+				return " # " + lastName.get() + firstName.get() + address.get() + phone.get() + mail.get();
+			}
+		};
+	}
 	
 	public ObservableContactDetails(String lastNameIN, String firstNameIN,
 			String addressIN, String phoneIN, String mailIN)
@@ -16,47 +36,77 @@ public class ObservableContactDetails extends ContactDetails {
 		address = new SimpleStringProperty(addressIN);
 		phone = new SimpleStringProperty(phoneIN);
 		mail = new SimpleStringProperty(mailIN);
-	
+		
+		key = new ObjectBinding<String>() {
+			{ bind(lastName, firstName, address, phone, mail) ;}
+			protected String computeValue() {
+				return " # " + lastName.get() + firstName.get() + address.get() + phone.get() + mail.get();
+			}
+		};
 	}
 
-	public SimpleStringProperty getLastNameProp() {
+	public SimpleStringProperty getLastNameProperty() {
 		return lastName;
 	}
-
-	public void setLastNameProp(SimpleStringProperty lastName) {
-		this.lastName = lastName;
+	
+	public String getLastName() {
+		return lastName.get();
 	}
 
-	public SimpleStringProperty getFirstNameProp() {
+	public void setLastNameProp(String lastName) {
+		this.lastName.set(lastName);
+	}
+
+	public SimpleStringProperty getFirstNameProperty() {
 		return firstName;
 	}
-
-	public void setFirstNameProp(SimpleStringProperty firstName) {
-		this.firstName = firstName;
+	
+	public String getFirstName() {
+		return firstName.get();
 	}
 
-	public SimpleStringProperty getAddressProp() {
+	public void setFirstNameProp(String firstName) {
+		this.firstName.set(firstName);
+	}
+
+	public SimpleStringProperty getAddressProperty() {
 		return address;
 	}
-
-	public void setAddressProp(SimpleStringProperty address) {
-		this.address = address;
+	
+	public String getAddress() {
+		return address.get();
 	}
 
-	public SimpleStringProperty getPhoneProp() {
+	public void setAddressProp(String address) {
+		this.address.set(address);
+	}
+
+	public SimpleStringProperty getPhoneProperty() {
 		return phone;
 	}
-
-	public void setPhoneProp(SimpleStringProperty phone) {
-		this.phone = phone;
+	
+	public String getPhone() {
+		return phone.get();
 	}
 
-	public SimpleStringProperty getMailProp() {
+	public void setPhoneProp(String phone) {
+		this.phone.set(phone);
+	}
+
+	public SimpleStringProperty getMailProperty() {
 		return mail;
 	}
+	
+	public String getMail() {
+		return mail.get();
+	}
 
-	public void setMailProp(SimpleStringProperty mail) {
-		this.mail = mail;
+	public void setMailProp(String mail) {
+		this.mail.set(mail);
+	}
+	
+	public String genKey() {
+		return key.get();
 	}
 
 }

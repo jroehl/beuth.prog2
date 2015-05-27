@@ -3,6 +3,8 @@ package appointment;
 import java.text.ParseException;
 import java.util.Arrays;
 
+import addressBook.ObservableContactDetails;
+
 
 
 
@@ -10,6 +12,14 @@ public class testApp {
 	
 	
 	public static void main(String[] args) throws IllegalTimeException, ParseException {
+		
+		ObservableContactDetails cdet = new ObservableContactDetails("Pan", "Peter", "Test1", "Test2", "Test3");
+		
+		System.out.println(cdet.getFirstName());
+		System.out.println(cdet.genKey());
+		cdet.setFirstNameProp("Horst");
+		System.out.println(cdet.getFirstName());
+		System.out.println(cdet.genKey());
 		
 		Appointment app = new Appointment("TEST", "11:00", "12:00", "12/04/2015", "12/04/2015", "Meeting");
 		

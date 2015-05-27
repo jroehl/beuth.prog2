@@ -7,6 +7,10 @@ public class ContactDetails {
 
 	private String[] list = new String[5];
 	ObservableList<String> olist = FXCollections.observableArrayList(list);
+	
+	public ContactDetails() {
+		
+	}
 
 	/*
 	 * Konstruktor bekommt 5 Strings übergeben, erstellt jeweils ein
