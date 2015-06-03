@@ -105,7 +105,7 @@ public class ObservableContactDetails extends ContactDetails {
 		this.mail.set(mail);
 	}
 	
-	public String genKey() {
+	public String getKey() {
 		return key.get();
 	}
 	

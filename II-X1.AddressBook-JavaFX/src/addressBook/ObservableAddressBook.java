@@ -7,15 +7,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 public class ObservableAddressBook {
 
-	private TreeMap<String, ObservableContactDetails> addressBook;
-
+	private ObservableMap<String, ObservableContactDetails> addressBook;
+	
 	/*
 	 * In dem Standardkonstruktor wird eine neue TreeMap erstellt. Die
 	 * gespeicherten Properties werden aus einer Datei gelesen. Mittels einer
@@ -25,11 +25,11 @@ public class ObservableAddressBook {
 	 * benutzt um ein neues ContactDetails Objekt zu erzeugen und in die TreeMap
 	 * einzufügen.
 	 */
+	
 	public ObservableAddressBook() {
-		addressBook = new TreeMap<String, ObservableContactDetails>();
+		addressBook = FXCollections.observableHashMap();
 		Properties properties = new Properties();
 		try {
-			// /Users/jroehl/Dropbox/Programmierung/GIT/Beuth_Programmieren_2/II-X1.AddressBook-JavaFX/data.properties
 			properties
 					.load(new FileInputStream(
 							"data.properties"));
@@ -48,23 +48,28 @@ public class ObservableAddressBook {
 			try {
 				tempDet = new ObservableContactDetails(tempList[0], tempList[1],
 						tempList[2], tempList[3], tempList[4]);
-				addressBook.put(tempDet.genKey(), tempDet);
+				addressBook.put(tempDet.getKey(), tempDet);
 			} catch (IllegalArgumentException e) {
 				System.out.println("No valid entry!");
 			}
-
 		}
+	}
+	
+	public ObservableMap<String, ObservableContactDetails> getOHashMap() {
+		return addressBook;
+		
+	}
+	
+	public ObservableList<ObservableContactDetails> getAllValues() {
+		ObservableList<ObservableContactDetails> cdet = FXCollections
+				.observableArrayList();
+		cdet.addAll(addressBook.values());
+		return cdet;
 	}
 
 	/*
-	 * Save Methode, schreibt die TreeMap in eine Datei.
+	 * Save Methode, schreibt die HashMap in eine Datei.
 	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#save()
-	 */
-	
 	public void save() throws IOException {
 		Properties properties = new Properties();
 		for (Map.Entry<String, ObservableContactDetails> entry : addressBook.entrySet()) {
@@ -80,20 +85,15 @@ public class ObservableAddressBook {
 
 	/*
 	 * Methode bekommt ein ContactDetails Objekt übergeben. Es wird mit dem
-	 * generierten genKey() String als Key und dem Objet ein Addressbuch
+	 * generierten getKey() String als Key und dem Objet ein Addressbuch
 	 * (TreeMap) Eintrag erzeugt. Im Konstruktor wird schon überprüft, ob eine
 	 * IllegalArgumentsException geworfen wird
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#add(addressBook.ContactDetails)
 	 */
 	public void add(ObservableContactDetails details) throws IllegalArgumentException {
 		if (details == null)
 			throw new IllegalArgumentException();
 		try {
-			addressBook.put(details.genKey(), details);
+			addressBook.put(details.getKey(), details);
 		} catch (IllegalArgumentException e) {
 			System.out.println("No valid entry!");
 		}
@@ -107,38 +107,8 @@ public class ObservableAddressBook {
 	 * gefundenen Kontakte in der ObservableList gespeichert.
 	 */
 
-	// Diese Methode sucht in den Keys, ob der SuchString vorkommt und
-	// speichert dann das Ergebnis in der ObservableList
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#getDetails(java.lang.String)
-	 */
-	public ObservableList<ObservableContactDetails> getDetails(String key)
-			throws IllegalArgumentException {
-		if (key == null) {
-			throw new IllegalArgumentException();
-		}
-		ObservableList<ObservableContactDetails> cdet = FXCollections
-				.observableArrayList();
-		for (Entry<String, ObservableContactDetails> entry : addressBook.entrySet()) {
-			if (entry.getKey().contains(key)) {
-				cdet.add(addressBook.get(entry.getKey()));
-			}
-		}
-		if (cdet.size() == 0)
-			return null;
-		else
-			return cdet;
-	}
-
 	// Diese Methode sucht in den Values, ob der SuchString vorkommt und
 	// speichert dann das Ergebnis in der ObservableList
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#search(java.lang.String)
-	 */
 	public ObservableList<ObservableContactDetails> search(String keyPrefix)
 			throws IllegalArgumentException {
 		if (keyPrefix == null) {
@@ -162,31 +132,19 @@ public class ObservableAddressBook {
 	 * wird der entsprechende Eintrag des oldKeys gelöscht um dann aus dem
 	 * ContactDetails Objekt einen neuen Eintrag zu erzeugen.
 	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * addressBook.AddressBookInterfaceNew#changeContact(addressBook.ContactDetails
-	 * , java.lang.String)
-	 */
 	public void changeContact(ObservableContactDetails details, String removeThis)
 			throws IllegalArgumentException {
-
 		if (removeThis == null || details == null) {
 			throw new IllegalArgumentException();
 		}
-		addressBook.put(details.genKey(), details);
+		addressBook.put(details.getKey(), details);
 		addressBook.remove(removeThis);
 	}
 
 	/*
 	 * Methode gibt die Größe des Addressbuches als Int Zahl wieder.
 	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#getNumberOfEntries()
-	 */
+
 	public int getNumberOfEntries() {
 		return addressBook.keySet().size();
 	}
@@ -194,11 +152,6 @@ public class ObservableAddressBook {
 	/*
 	 * Methode bekommt einen String übergeben und löscht den entsprechenden
 	 * Eintrag in dem Addressbuch.
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#removeContact(java.lang.String)
 	 */
 	public void removeContact(String key) throws IllegalArgumentException {
 		if (key == null) {
@@ -211,11 +164,6 @@ public class ObservableAddressBook {
 	 * Methode bekommt einen String übergeben und testet über die search
 	 * Methode, ob ein Eintrag mit dem entsprechenden Schlüssel vorhanden ist
 	 * und gibt einen boolschen Wert (true ^ false) wieder.
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#keyInUse(java.lang.String)
 	 */
 	public boolean keyInUse(String key) throws IllegalArgumentException {
 		if (key == null) {

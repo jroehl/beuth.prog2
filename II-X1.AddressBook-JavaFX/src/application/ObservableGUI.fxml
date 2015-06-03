@@ -13,7 +13,7 @@
         <items>
           <AnchorPane fx:id="leftAnch" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TextField fx:id="searchFld" maxHeight="-Infinity" minHeight="-Infinity" onKeyReleased="#searchContact" prefHeight="25.0" promptText="Search for:" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0" />
+                  <TextField fx:id="searchFld" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" promptText="Search for:" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0" />
                   <Button fx:id="delBtn" layoutX="615.0" layoutY="101.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" onAction="#removeContact" prefHeight="24.0" prefWidth="24.0" text="X" visible="false">
                      <font>
                         <Font size="12.0" />

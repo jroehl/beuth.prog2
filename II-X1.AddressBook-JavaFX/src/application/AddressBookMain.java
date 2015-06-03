@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import addressBook.ObservableAddressBook;
 
 public class AddressBookMain extends Application {
 
@@ -13,11 +14,13 @@ public class AddressBookMain extends Application {
 	 * Erzeugt das JavaFX Hauptfenster.
 	 */
 
+	private ObservableAddressBook addBook = new ObservableAddressBook();
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource(
-					"/application/ObservableGUI.fxml")); // neu ObservableGUI.fxml
+					"/application/ObservableGUI.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(
 					getClass().getResource("application.css").toExternalForm());
@@ -35,6 +38,10 @@ public class AddressBookMain extends Application {
 		
 	}
 
+	public ObservableAddressBook getPersonData() {
+        return addBook;
+    }
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
