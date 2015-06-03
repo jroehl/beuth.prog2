@@ -17,7 +17,7 @@ public class AddressBookMain extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource(
-					"/application/ObservableGUI.fxml"));
+					"/application/ObservableGUI.fxml")); // neu ObservableGUI.fxml
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(
 					getClass().getResource("application.css").toExternalForm());

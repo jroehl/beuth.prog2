@@ -78,6 +78,7 @@ public class MyController implements Initializable {
 	AddressBookInterfaceNew addBook = new AddressBook();
 	String tempSearchString = null;
 
+	// WICHTIG
 	private TableView<ContactDetails> table;
 	private TableColumn<ContactDetails, String> firstNameCol;
 	private TableColumn<ContactDetails, String> lastNameCol;
@@ -91,7 +92,10 @@ public class MyController implements Initializable {
 	}
 
 	/*
-	 * Create the Table View
+	 * WICHTIG Create the Table View Erzeugt die Tabelle mit Anpassungen des
+	 * Layouts. Erzeugt einen Event-Handler (Lambda Ausdruck) um die Methode
+	 * editContact() bei klick auf die Tabellenspalte aufzurufen. Fügt alle
+	 * Children dem AnchorPane hinzu.
 	 */
 	public void createTableView() {
 		table = new TableView<ContactDetails>();
@@ -136,26 +140,11 @@ public class MyController implements Initializable {
 	}
 
 	/*
-	 * Erstellt die CellValueFactory für die Tabellenspalte. Holt durch einen
-	 * Lambda Ausdruck den jeweiligen StringProperty. Setzt die an die Methode
-	 * übergebene ObservableList aus ContactDetails in die Tabelle ein.
+	 * WICHTIG Erstellt die CellValueFactory für die Tabellenspalte. Holt durch
+	 * einen Lambda Ausdruck die ObservableList aus ContactDetails und erzeugt
+	 * eine SimpleStringProperty. Setzt die an die Methode übergebene
+	 * ObservableList aus ContactDetails in die Tabelle ein.
 	 */
-
-	// public void fillList(ObservableList<ContactDetails> personData) {
-	//
-	// firstNameCol.setCellValueFactory(cellData -> cellData.getValue()
-	// .getFirstNameProp());
-	// lastNameCol.setCellValueFactory(cellData -> cellData.getValue()
-	// .getLastNameProp());
-	// addressCol.setCellValueFactory(cellData -> cellData.getValue()
-	// .getAddressProp());
-	// phoneCol.setCellValueFactory(cellData -> cellData.getValue()
-	// .getPhoneProp());
-	// mailCol.setCellValueFactory(cellData -> cellData.getValue()
-	// .getMailProp());
-	//
-	// table.setItems(personData);
-	// }
 
 	public void fillTableView(ObservableList<ContactDetails> personData) {
 
@@ -174,7 +163,8 @@ public class MyController implements Initializable {
 	}
 
 	/*
-	 * Öffnet neues Fenster mit der ListView und füllt diese
+	 * WICHTIG Öffnet neues Fenster mit der ListView und füllt diese. Es wird
+	 * das keyset des Adressbuchs geholt.
 	 */
 	public void showListView() {
 
@@ -189,7 +179,10 @@ public class MyController implements Initializable {
 	}
 
 	/*
-	 * Öffnet neues Fenster mit dem LineChart und füllt diesen
+	 * WICHTIG Öffnet neues Fenster mit dem LineChart und füllt diesen. Es wird
+	 * als Bezeichner des XYCharts (x-Achse) die Anfangsbuchstaben des Vor- und
+	 * Nachnamens verbunden. Als Werte der y-Achse wird die Länge der Keys
+	 * genutzt
 	 */
 	public void showLineChart() {
 		Stage LineChartStage = new Stage();

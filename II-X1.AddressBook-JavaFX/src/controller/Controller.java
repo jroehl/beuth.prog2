@@ -34,7 +34,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -105,7 +105,7 @@ public class Controller implements Initializable {
 	 */
 	public void createTableView() {
 		
-		// Key Problem! Key muss erneuert werden, Versuch ObjectBinding
+		// ObjectBinding Cell und Wert
 		
 		table = new TableView<ObservableContactDetails>();
 		table.setEditable(true);
@@ -214,6 +214,8 @@ public class Controller implements Initializable {
 	 * Lambda Ausdruck den jeweiligen StringProperty. Setzt die an die Methode
 	 * übergebene ObservableList aus ContactDetails in die Tabelle ein.
 	 */
+	
+		// Models benutzen? Unter der Oberfläche Änderungen vornehmen und dadurch Ansicht aktualisieren
 
 	 public void fillTableView(ObservableList<ObservableContactDetails> personData) {
 //		 
@@ -241,6 +243,9 @@ public class Controller implements Initializable {
 		stage.showAndWait();
 	}
 	
+	/*
+	 * 
+	 */
 	public void showEditableListView() {
 
 		Stage stage = new Stage();
@@ -248,10 +253,13 @@ public class Controller implements Initializable {
 		Set<String> keyset = addBook.getKeys();
 		entries.addAll(keyset);
 		ListView<String> lView = new ListView<String>();
-		lView.setCellFactory(ComboBoxListCell.forListView(entries));   
+		lView.setCellFactory(TextFieldListCell.forListView());
+		lView.setOnEditCommit((event) -> {
+			System.out.println("Wert ist: "+event.getNewValue());
+			System.out.println("Würde funktionieren, wenn es Sinn machen würde den Key direkt zu verändern");
+			});
 		lView.setItems(entries);
 		lView.setEditable(true);
-//		lView.setCellFactory(TextFieldListCell.forListView());
 		stage.setScene(new Scene(lView, 450, 200));
 		stage.showAndWait();
 	}
