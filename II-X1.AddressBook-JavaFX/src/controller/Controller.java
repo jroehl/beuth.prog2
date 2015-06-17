@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -21,11 +20,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
@@ -402,6 +397,13 @@ public class Controller implements Initializable {
 		}
 	}
 
+	public void saveToCSV() {
+		try {
+			addBook.saveToCSV();
+		} catch (IOException e) {
+			System.out.println("Caught in the act!");
+		}
+	}
 	/*
 	 * Schließt die Applikation.
 	 */
@@ -455,33 +457,33 @@ public class Controller implements Initializable {
 			if (addBook.search(txtFld.getText().toLowerCase()) != null) {
 				table.setItems(addBook.search(txtFld.getText().toLowerCase()));
 				// Probleme andere Rechner
-				addBtn.setOnAction((event) -> {
-					Alert alert = new Alert(AlertType.WARNING);
-					alert.setTitle("Alert!");
-					alert.setHeaderText("Entry does probably already exist or is not rational -\n do you want to continue anyway?");
-					ButtonType yesBtn = new ButtonType("Yes");
-					ButtonType noBtn = new ButtonType("No");
-					ButtonType cancelBtn = new ButtonType("Cancel",
-							ButtonData.CANCEL_CLOSE);
-					alert.getButtonTypes().setAll(yesBtn, noBtn, cancelBtn);
-					Optional<ButtonType> result = alert.showAndWait();
-					if (result.get() == yesBtn) {
-						addBtn.setText("Add");
-						addBtn.setOnAction((event2) -> {
-							addDetails();
-						});
-						addDetails();
-					} else if (result.get() == noBtn) {
-						addBtn.setText("Add");
-						clearEntryField();
-						addBtn.setOnAction((event2) -> {
-							addDetails();
-						});
-					} else {
-						addBtn.setText("Add");
-						// ... user chose CANCEL or closed the dialog
-					}
-				});
+//				addBtn.setOnAction((event) -> {
+//					Alert alert = new Alert(AlertType.WARNING);
+//					alert.setTitle("Alert!");
+//					alert.setHeaderText("Entry does probably already exist or is not rational -\n do you want to continue anyway?");
+//					ButtonType yesBtn = new ButtonType("Yes");
+//					ButtonType noBtn = new ButtonType("No");
+//					ButtonType cancelBtn = new ButtonType("Cancel",
+//							ButtonData.CANCEL_CLOSE);
+//					alert.getButtonTypes().setAll(yesBtn, noBtn, cancelBtn);
+//					Optional<ButtonType> result = alert.showAndWait();
+//					if (result.get() == yesBtn) {
+//						addBtn.setText("Add");
+//						addBtn.setOnAction((event2) -> {
+//							addDetails();
+//						});
+//						addDetails();
+//					} else if (result.get() == noBtn) {
+//						addBtn.setText("Add");
+//						clearEntryField();
+//						addBtn.setOnAction((event2) -> {
+//							addDetails();
+//						});
+//					} else {
+//						addBtn.setText("Add");
+//						// ... user chose CANCEL or closed the dialog
+//					}
+//				});
 			} else {
 				table.setItems(addBook.search(txtFld.getText().toLowerCase()));
 				addBtn.setOnAction((event) -> {

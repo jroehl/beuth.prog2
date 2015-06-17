@@ -78,6 +78,7 @@ public class AddressBook implements AddressBookInterfaceNew {
 		}
 	}
 
+
 	/*
 	 * Methode bekommt ein ContactDetails Objekt übergeben. Es wird mit dem
 	 * generierten genKey() String als Key und dem Objet ein Addressbuch

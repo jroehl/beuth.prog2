@@ -14,6 +14,44 @@ public class Appointment {
 	private ObjectBinding<Long> duration;
 	private ObjectBinding<LocalDateTime> startDateTime, endDateTime;
 	private SimpleStringProperty startDate, endDate, startTime, endTime;
+	
+	public Appointment() throws IllegalTimeException {
+		dateContent = new SimpleStringProperty("-");
+		category = new SimpleStringProperty("-");
+		startDate = new SimpleStringProperty("01/01/1971");
+		startTime = new SimpleStringProperty("00:00");
+		endDate = new SimpleStringProperty("01/01/1971");
+		endTime = new SimpleStringProperty("00:01");
+		
+		startDateTime = new ObjectBinding<LocalDateTime>() {
+			{ bind(startDate, startTime) ;}
+			protected LocalDateTime computeValue() {
+				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+				LocalDateTime timeDateTime = LocalDateTime.parse(startDate.get()+" "+startTime.get(), dateTimeFormatter);
+				return timeDateTime;
+			}
+		};
+		
+		endDateTime = new ObjectBinding<LocalDateTime>() {
+			{ bind(endDate, endTime) ;}
+			protected LocalDateTime computeValue() {
+				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+				LocalDateTime timeDateTime = LocalDateTime.parse(endDate.get()+" "+endTime.get(), dateTimeFormatter);
+				return timeDateTime;
+			}
+		};
+		
+		duration = new ObjectBinding<Long>() {
+			{ bind(startDateTime, endDateTime) ;}
+			protected Long computeValue() {
+				return startDateTime.get().until(endDateTime.get(), ChronoUnit.MINUTES);
+			}
+		};
+		
+		if (startDateTime.get().isAfter(endDateTime.get())) {
+			throw new IllegalTimeException();
+    	}
+	}
 
 	public Appointment(String dateContentIN,String startTimeIN,String endTimeIN, String startDateIN, String endDateIN, String categoryIN) throws IllegalTimeException, ParseException {
 		dateContent = new SimpleStringProperty(dateContentIN);
@@ -53,12 +91,53 @@ public class Appointment {
     	}
 	}
 	
+	public Appointment(String[] split) throws IllegalTimeException {
+		this.
+		dateContent = new SimpleStringProperty(split[0]);
+		category = new SimpleStringProperty(split[1]);
+		startDate = new SimpleStringProperty(split[2]);
+		startTime = new SimpleStringProperty(split[3]);
+		endDate = new SimpleStringProperty(split[4]);
+		endTime = new SimpleStringProperty(split[5]);
+		
+		startDateTime = new ObjectBinding<LocalDateTime>() {
+			{ bind(startDate, startTime) ;}
+			protected LocalDateTime computeValue() {
+				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+				LocalDateTime timeDateTime = LocalDateTime.parse(startDate.get()+" "+startTime.get(), dateTimeFormatter);
+				return timeDateTime;
+			}
+		};
+		
+		endDateTime = new ObjectBinding<LocalDateTime>() {
+			{ bind(endDate, endTime) ;}
+			protected LocalDateTime computeValue() {
+				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+				LocalDateTime timeDateTime = LocalDateTime.parse(endDate.get()+" "+endTime.get(), dateTimeFormatter);
+				return timeDateTime;
+			}
+		};
+		
+		duration = new ObjectBinding<Long>() {
+			{ bind(startDateTime, endDateTime) ;}
+			protected Long computeValue() {
+				return startDateTime.get().until(endDateTime.get(), ChronoUnit.MINUTES);
+			}
+		};
+		
+		if (startDateTime.get().isAfter(endDateTime.get())) {
+			throw new IllegalTimeException();
+    	}
+	}
+
+	
+
 	public SimpleStringProperty getDateContentProperty() {
 		return dateContent;
 	}
 	
 	public String getDateContent() {
-		return dateContent.get();
+		return dateContent.getValue();
 	}
 
 	public void setDateContent(String dateContent) {
@@ -70,7 +149,7 @@ public class Appointment {
 	}
 	
 	public String getCategory() {
-		return category.get();
+		return category.getValue();
 	}
 
 	public void setCategory(String category) {
@@ -82,7 +161,7 @@ public class Appointment {
 	}
 	
 	public String getStartDateTime() {
-		return startDateTime.get().toString();
+		return startDateTime.get().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
 	}
 
 	public ObjectBinding<LocalDateTime> getEndDateTimeBinding() {
@@ -90,7 +169,7 @@ public class Appointment {
 	}
 	
 	public String getEndDateTime() {
-		return endDateTime.get().toString();
+		return endDateTime.get().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
 	}
 
 	public SimpleStringProperty getStartDateProperty() {
@@ -98,7 +177,7 @@ public class Appointment {
 	}
 	
 	public String getStartDate() {
-		return startDate.get();
+		return startDate.getValue();
 	}
 
 	public void setStartDate(String startDate) throws IllegalTimeException, ParseException {
@@ -113,7 +192,7 @@ public class Appointment {
 	}
 	
 	public String getEndDate() {
-		return endDate.get();
+		return endDate.getValue();
 	}
 
 	public void setEndDate(String endDate) throws IllegalTimeException, ParseException {
@@ -128,7 +207,7 @@ public class Appointment {
 	}
 
 	public String getStartTime() {
-		return startTime.get();
+		return startTime.getValue();
 	}
 	
 	public void setStartTime(String startTime) throws IllegalTimeException, ParseException {
@@ -143,7 +222,7 @@ public class Appointment {
 	}
 	
 	public String getEndTime() {
-		return endTime.get();
+		return endTime.getValue();
 	}
 
 	public void setEndTime(String endTime) throws IllegalTimeException, ParseException {

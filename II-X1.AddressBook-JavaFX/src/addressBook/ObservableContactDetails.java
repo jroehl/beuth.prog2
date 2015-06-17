@@ -45,6 +45,22 @@ public class ObservableContactDetails extends ContactDetails {
 		};
 	}
 
+	public ObservableContactDetails(String[] split) {
+		
+		lastName = new SimpleStringProperty(split[0]);
+		firstName = new SimpleStringProperty(split[1]);
+		address = new SimpleStringProperty(split[2]);
+		phone = new SimpleStringProperty(split[3]);
+		mail = new SimpleStringProperty(split[4]);
+		
+		key = new ObjectBinding<String>() {
+			{ bind(lastName, firstName, address, phone, mail) ;}
+			protected String computeValue() {
+				return " # " + lastName.get() + firstName.get() + address.get() + phone.get() + mail.get();
+			}
+		};
+	}
+
 	public SimpleStringProperty getLastNameProperty() {
 		return lastName;
 	}

@@ -1,8 +1,13 @@
 package addressBook;
 
-import java.io.FileInputStream;
+import io.CSVContactWriter;
+import io.CSVContactsReader;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -28,32 +33,43 @@ public class ObservableAddressBook {
 	
 	public ObservableAddressBook() {
 		addressBook = FXCollections.observableHashMap();
-		Properties properties = new Properties();
-		try {
-			properties
-					.load(new FileInputStream(
-							"data.properties"));
-		} catch (IOException e) {
-			System.out.println("File not found!!");
-			System.exit(0);
-		}
-		for (String key : properties.stringPropertyNames()) {
-			String[] tempList = new String[5];
-			int n = 0;
-			for (int i = 0; i < properties.get(key).toString().split("§").length; i++) {
-				tempList[n] = properties.get(key).toString().split("§")[n];
-				n++;
-			}
-			ObservableContactDetails tempDet;
+		
+		CSVContactsReader csvReader = new CSVContactsReader();
+		List<ObservableContactDetails> list = csvReader.readEntityList("contacts.csv", ":");
+		
+		for (ObservableContactDetails cdet : list) {
 			try {
-				tempDet = new ObservableContactDetails(tempList[0], tempList[1],
-						tempList[2], tempList[3], tempList[4]);
-				addressBook.put(tempDet.getKey(), tempDet);
+				addressBook.put(cdet.getKey(), cdet);
 			} catch (IllegalArgumentException e) {
 				System.out.println("No valid entry!");
 			}
 		}
 	}
+//		Properties properties = new Properties();
+//		try {
+//			properties
+//					.load(new FileInputStream(
+//							"data.properties"));
+//		} catch (IOException e) {
+//			System.out.println("File not found!!");
+//			System.exit(0);
+//		}
+//		for (String key : properties.stringPropertyNames()) {
+//			String[] tempList = new String[5];
+//			int n = 0;
+//			for (int i = 0; i < properties.get(key).toString().split("§").length; i++) {
+//				tempList[n] = properties.get(key).toString().split("§")[n];
+//				n++;
+//			}
+//			ObservableContactDetails tempDet;
+//			try {
+//				tempDet = new ObservableContactDetails(tempList[0], tempList[1],
+//						tempList[2], tempList[3], tempList[4]);
+//				addressBook.put(tempDet.getKey(), tempDet);
+//			} catch (IllegalArgumentException e) {
+//				System.out.println("No valid entry!");
+//			}
+		
 	
 	public ObservableMap<String, ObservableContactDetails> getOHashMap() {
 		return addressBook;
@@ -65,6 +81,10 @@ public class ObservableAddressBook {
 				.observableArrayList();
 		cdet.addAll(addressBook.values());
 		return cdet;
+	}
+	
+	public void openFromCSV() throws IOException {
+		
 	}
 
 	/*
@@ -83,6 +103,19 @@ public class ObservableAddressBook {
 		}
 	}
 
+	public void saveToCSV() throws IOException {
+		CSVContactWriter csvWriter = new CSVContactWriter();
+		Collection<ObservableContactDetails> coll = addressBook.values();
+		List<ObservableContactDetails> list = new ArrayList<ObservableContactDetails>();
+		list.addAll(coll);
+		try {
+			csvWriter.writeEntityList(list, "contacts.csv", ":");
+		} catch (IOException e) {
+			System.out.println("!!!ERROR!!!");
+			System.out.println("!File not found!");
+		}
+	}
+	
 	/*
 	 * Methode bekommt ein ContactDetails Objekt übergeben. Es wird mit dem
 	 * generierten getKey() String als Key und dem Objet ein Addressbuch

@@ -1,7 +1,13 @@
 package appointment;
 
+import io.CSVAppointmentReader;
+import io.CSVAppointmentWriter;
+
+import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import addressBook.ObservableContactDetails;
 
@@ -11,7 +17,7 @@ import addressBook.ObservableContactDetails;
 public class testApp {
 	
 	
-	public static void main(String[] args) throws IllegalTimeException, ParseException {
+	public static void main(String[] args) throws IllegalTimeException, ParseException, IOException {
 		
 		ObservableContactDetails cdet = new ObservableContactDetails("Pan", "Peter", "Test1", "Test2", "Test3");
 		
@@ -60,5 +66,28 @@ public class testApp {
 		System.out.println(app.getEndDateTime());
 		System.out.println(app.getDurationMin());
 		System.out.println(Arrays.toString(app.getDurationSplit()));
+		
+		Appointment app2 = new Appointment("TEST2", "10:00", "13:45", "11/19/2015", "11/19/2015", "Meeting nu");
+		
+		
+		List<Appointment> alist = new ArrayList<Appointment>();
+		alist.add(app);
+		alist.add(app2);
+		
+		try {
+			CSVAppointmentWriter.writeEntityList(alist, "appointments.csv", ";");
+		} catch (IOException e) {
+			System.out.println("!!!ERROR!!!");
+			System.out.println("!File not found!");
+		}
+		
+		List<Appointment> aListNew = CSVAppointmentReader.readEntityList("appointments_.csv", ";");
+		
+//		System.out.println(aListNew);
+//		aListNew.get(0).getStartDateTimeBinding().getValue();
+		System.out.println(aListNew.get(0).getDateContent());
+//		aListNew.get(1).getStartDateTimeBinding().getValue();	
+		System.out.println(aListNew.get(1).getDateContent());
+		
 	}
 }
