@@ -15,7 +15,7 @@ public class Appointment {
 	private ObjectBinding<LocalDateTime> startDateTime, endDateTime;
 	private SimpleStringProperty startDate, endDate, startTime, endTime;
 	
-	public Appointment() throws IllegalTimeException {
+	public Appointment() {
 		dateContent = new SimpleStringProperty("-");
 		category = new SimpleStringProperty("-");
 		startDate = new SimpleStringProperty("01/01/1971");
@@ -48,9 +48,6 @@ public class Appointment {
 			}
 		};
 		
-		if (startDateTime.get().isAfter(endDateTime.get())) {
-			throw new IllegalTimeException();
-    	}
 	}
 
 	public Appointment(String dateContentIN,String startTimeIN,String endTimeIN, String startDateIN, String endDateIN, String categoryIN) throws IllegalTimeException, ParseException {

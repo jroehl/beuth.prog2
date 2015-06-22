@@ -1,5 +1,7 @@
 package appointment;
 
+import io.BINAppointmentReader;
+import io.BINAppointmentWriter;
 import io.CSVAppointmentReader;
 import io.CSVAppointmentWriter;
 
@@ -81,13 +83,23 @@ public class testApp {
 			System.out.println("!File not found!");
 		}
 		
-		List<Appointment> aListNew = CSVAppointmentReader.readEntityList("appointments_.csv", ";");
+		try {
+			BINAppointmentWriter.writeEntityList(alist, "appointments.bin", ";");
+		} catch (IOException e) {
+			System.out.println("!!!ERROR!!!");
+			System.out.println("!File not found!");
+		}
+		
+		List<Appointment> aListNew = CSVAppointmentReader.readEntityList("appointments.csv", ";");
+		List<Appointment> aListBIN = BINAppointmentReader.readEntityList("appointments.bin", ";");
 		
 //		System.out.println(aListNew);
 //		aListNew.get(0).getStartDateTimeBinding().getValue();
 		System.out.println(aListNew.get(0).getDateContent());
+		System.out.println(aListBIN.get(0).getDateContent());
 //		aListNew.get(1).getStartDateTimeBinding().getValue();	
 		System.out.println(aListNew.get(1).getDateContent());
+		System.out.println(aListBIN.get(1).getDateContent());
 		
 	}
 }
