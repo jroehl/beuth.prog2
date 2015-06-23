@@ -9,7 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import appointment.Appointment;
-
+/**
+ * Schreibt die übergebenen Daten aus einer Liste von Appointments in eine CSV Datei
+ */
 public class CSVAppointmentWriter {
 	final static Charset ENCODING = StandardCharsets.UTF_8;
 

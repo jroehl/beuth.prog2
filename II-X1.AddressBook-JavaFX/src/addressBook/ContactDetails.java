@@ -12,7 +12,7 @@ public class ContactDetails {
 		
 	}
 
-	/*
+	/**
 	 * Konstruktor bekommt 5 Strings übergeben, erstellt jeweils ein
 	 * SimpleStringProperty und übergibt diese an die entsprechende Stelle des
 	 * Arrays.
@@ -31,7 +31,9 @@ public class ContactDetails {
 				throw new IllegalArgumentException();
 	}
 
-	// Getter und Setter funktionieren über den ArrayIndex
+	/**
+	 *  Getter und Setter funktionieren über den ArrayIndex
+	 */
 
 	public String getLastName() {
 		return list[0];
@@ -77,7 +79,7 @@ public class ContactDetails {
 		return list;
 	}
 
-	/*
+	/**
 	 * Gibt einen zusammengesetzten, durch Leerzeichen getrennten String der
 	 * gespeicherten Strings wieder.
 	 */
@@ -87,7 +89,7 @@ public class ContactDetails {
 				+ list[4].toLowerCase();
 	}
 
-	/*
+	/**
 	 * Gibt einen zusammengesetzten, durch § Zeichen getrennten String der
 	 * gespeicherten Strings wieder.
 	 */
@@ -96,7 +98,7 @@ public class ContactDetails {
 				+ list[4];
 	}
 
-	/*
+	/**
 	 * Generiert einen einmaligen Schlüssel aus dem # und dem direkt
 	 * zusammengesetzten String der gespeicherten Strings wieder.
 	 */

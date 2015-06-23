@@ -16,7 +16,7 @@ public class AddressBook implements AddressBookInterfaceNew {
 
 	private TreeMap<String, ContactDetails> addressBook;
 
-	/*
+	/**
 	 * In dem Standardkonstruktor wird eine neue TreeMap erstellt. Die
 	 * gespeicherten Properties werden aus einer Datei gelesen. Mittels einer
 	 * forEach Schleife wird jeder vorhandene String der vorhandenen
@@ -56,13 +56,8 @@ public class AddressBook implements AddressBookInterfaceNew {
 		}
 	}
 
-	/*
+	/**
 	 * Save Methode, schreibt die TreeMap in eine Datei.
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#save()
 	 */
 	@Override
 	public void save() throws IOException {
@@ -79,13 +74,13 @@ public class AddressBook implements AddressBookInterfaceNew {
 	}
 
 
-	/*
+	/**
 	 * Methode bekommt ein ContactDetails Objekt übergeben. Es wird mit dem
 	 * generierten genKey() String als Key und dem Objet ein Addressbuch
 	 * (TreeMap) Eintrag erzeugt. Im Konstruktor wird schon überprüft, ob eine
 	 * IllegalArgumentsException geworfen wird
 	 */
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see addressBook.AddressBookInterfaceNew#add(addressBook.ContactDetails)
@@ -102,20 +97,17 @@ public class AddressBook implements AddressBookInterfaceNew {
 
 	}
 
-	/*
+	/**
 	 * Die nächsten beiden Methoden bekommen einen String übergeben. Es wird
 	 * eine neue ObservableList für ContactDetails erzeugt. In diese Liste wird
 	 * mittels einer foreach Schleife das Ergebnis der Suche gespeichert.
 	 * Entweder wird bei keinem gefundenen Key null ausgegeben oder aber alle
 	 * gefundenen Kontakte in der ObservableList gespeichert.
 	 */
-
-	// Diese Methode sucht in den Keys, ob der SuchString vorkommt und
-	// speichert dann das Ergebnis in der ObservableList
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#getDetails(java.lang.String)
+	
+	/**
+	 *  Diese Methode sucht in den Keys, ob der SuchString vorkommt und
+	 *  speichert dann das Ergebnis in der ObservableList
 	 */
 	@Override
 	public ObservableList<ContactDetails> getDetails(String key)
@@ -136,12 +128,9 @@ public class AddressBook implements AddressBookInterfaceNew {
 			return cdet;
 	}
 
-	// Diese Methode sucht in den Values, ob der SuchString vorkommt und
-	// speichert dann das Ergebnis in der ObservableList
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#search(java.lang.String)
+	/**
+	 *  Diese Methode sucht in den Values, ob der SuchString vorkommt und
+	 *   speichert dann das Ergebnis in der ObservableList
 	 */
 	@Override
 	public ObservableList<ContactDetails> search(String keyPrefix)
@@ -162,17 +151,10 @@ public class AddressBook implements AddressBookInterfaceNew {
 			return cdet;
 	}
 
-	/*
+	/**
 	 * Methode bekommt ein ContactDetails Objekt und einen String übergeben. Es
 	 * wird der entsprechende Eintrag des oldKeys gelöscht um dann aus dem
 	 * ContactDetails Objekt einen neuen Eintrag zu erzeugen.
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * addressBook.AddressBookInterfaceNew#changeContact(addressBook.ContactDetails
-	 * , java.lang.String)
 	 */
 	@Override
 	public void changeContact(ContactDetails details, String removeThis)
@@ -185,28 +167,19 @@ public class AddressBook implements AddressBookInterfaceNew {
 		addressBook.remove(removeThis);
 	}
 
-	/*
+	/**
 	 * Methode gibt die Größe des Addressbuches als Int Zahl wieder.
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#getNumberOfEntries()
 	 */
 	@Override
 	public int getNumberOfEntries() {
 		return addressBook.keySet().size();
 	}
 
-	/*
+	/**
 	 * Methode bekommt einen String übergeben und löscht den entsprechenden
 	 * Eintrag in dem Addressbuch.
 	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#removeContact(java.lang.String)
-	 */
+	
 	@Override
 	public void removeContact(String key) throws IllegalArgumentException {
 		if (key == null) {
@@ -215,16 +188,12 @@ public class AddressBook implements AddressBookInterfaceNew {
 		addressBook.remove(key);
 	}
 
-	/*
+	/**
 	 * Methode bekommt einen String übergeben und testet über die search
 	 * Methode, ob ein Eintrag mit dem entsprechenden Schlüssel vorhanden ist
 	 * und gibt einen boolschen Wert (true ^ false) wieder.
 	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see addressBook.AddressBookInterfaceNew#keyInUse(java.lang.String)
-	 */
+	
 	@Override
 	public boolean keyInUse(String key) throws IllegalArgumentException {
 		if (key == null) {

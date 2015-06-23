@@ -9,6 +9,11 @@ import java.util.List;
 
 import addressBook.ObservableContactDetails;
 
+/**
+ * Liest aus einer csv Datei die Kontakt-Daten Zeile für Zeile ein.
+ * Erzeugt einen leeren Dummy Kontakt, wenn aus den gegebenen Werten kein Kontakt erzeugt werden kann
+ * Gibt eine Liste der Appointments wieder
+ */
 public class CSVContactsReader {
 
 	public static List<ObservableContactDetails> readEntityList(String dateiname, String splitter) {
@@ -27,9 +32,9 @@ public class CSVContactsReader {
 			for (String line : lines) {
 					target.add(new ObservableContactDetails(line.split(splitter)));
 			}
-		} catch (IOException ex) {
-			ex.printStackTrace(System.err);
-			target.addAll(null); // null addition to target to indicate problem
+		} catch (IOException e) {
+			target.add(new ObservableContactDetails());
+			System.out.println(e);
 		}
 
 		return target;

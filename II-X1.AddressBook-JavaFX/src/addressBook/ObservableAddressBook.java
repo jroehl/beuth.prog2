@@ -21,9 +21,9 @@ public class ObservableAddressBook {
 
 	private ObservableMap<String, ObservableContactDetails> addressBook;
 	
-	/*
+	/**
 	 * In dem Standardkonstruktor wird eine neue TreeMap erstellt. Die
-	 * gespeicherten Properties werden aus einer Datei gelesen. Mittels einer
+	 * gespeicherten Werte werden aus einer csv-Datei gelesen. Mittels einer
 	 * forEach Schleife wird jeder vorhandene String der vorhandenen
 	 * StringProperties durch die Split Methode geteilt und in einem Array
 	 * zwischengespeichert, die gespeicherten Strings werden nun jeweils wieder
@@ -34,8 +34,7 @@ public class ObservableAddressBook {
 	public ObservableAddressBook() {
 		addressBook = FXCollections.observableHashMap();
 		
-		CSVContactsReader csvReader = new CSVContactsReader();
-		List<ObservableContactDetails> list = csvReader.readEntityList("contacts.csv", ":");
+		List<ObservableContactDetails> list = CSVContactsReader.readEntityList("contacts.csv", ":");
 		
 		for (ObservableContactDetails cdet : list) {
 			try {
@@ -71,11 +70,17 @@ public class ObservableAddressBook {
 //			}
 		
 	
+	/***
+	 * Die ObservableMap Hashmap addressbook wird wiedergegeben
+	 */
 	public ObservableMap<String, ObservableContactDetails> getOHashMap() {
 		return addressBook;
 		
 	}
 	
+	/**
+	 * Eine ObservableList mit allen Values der OMap wird wiedergegeben
+	 */
 	public ObservableList<ObservableContactDetails> getAllValues() {
 		ObservableList<ObservableContactDetails> cdet = FXCollections
 				.observableArrayList();
@@ -83,12 +88,9 @@ public class ObservableAddressBook {
 		return cdet;
 	}
 	
-	public void openFromCSV() throws IOException {
-		
-	}
-
-	/*
-	 * Save Methode, schreibt die HashMap in eine Datei.
+	
+	/**
+	 * Save Methode, schreibt die HashMap in eine properties Datei.
 	 */
 	public void save() throws IOException {
 		Properties properties = new Properties();
@@ -103,20 +105,22 @@ public class ObservableAddressBook {
 		}
 	}
 
+	/**
+	 * Save Methode, schreibt die HashMap in eine csv Datei.
+	 */
 	public void saveToCSV() throws IOException {
-		CSVContactWriter csvWriter = new CSVContactWriter();
 		Collection<ObservableContactDetails> coll = addressBook.values();
 		List<ObservableContactDetails> list = new ArrayList<ObservableContactDetails>();
 		list.addAll(coll);
 		try {
-			csvWriter.writeEntityList(list, "contacts.csv", ":");
+			CSVContactWriter.writeEntityList(list, "contacts.csv", ":");
 		} catch (IOException e) {
 			System.out.println("!!!ERROR!!!");
 			System.out.println("!File not found!");
 		}
 	}
 	
-	/*
+	/**
 	 * Methode bekommt ein ContactDetails Objekt übergeben. Es wird mit dem
 	 * generierten getKey() String als Key und dem Objet ein Addressbuch
 	 * (TreeMap) Eintrag erzeugt. Im Konstruktor wird schon überprüft, ob eine
@@ -132,7 +136,7 @@ public class ObservableAddressBook {
 		}
 	}
 
-	/*
+	/**
 	 * Die nächsten beiden Methoden bekommen einen String übergeben. Es wird
 	 * eine neue ObservableList für ContactDetails erzeugt. In diese Liste wird
 	 * mittels einer foreach Schleife das Ergebnis der Suche gespeichert.
@@ -160,7 +164,7 @@ public class ObservableAddressBook {
 			return cdet;
 	}
 
-	/*
+	/**
 	 * Methode bekommt ein ContactDetails Objekt und einen String übergeben. Es
 	 * wird der entsprechende Eintrag des oldKeys gelöscht um dann aus dem
 	 * ContactDetails Objekt einen neuen Eintrag zu erzeugen.
@@ -174,7 +178,7 @@ public class ObservableAddressBook {
 		addressBook.remove(removeThis);
 	}
 
-	/*
+	/**
 	 * Methode gibt die Größe des Addressbuches als Int Zahl wieder.
 	 */
 
@@ -182,7 +186,7 @@ public class ObservableAddressBook {
 		return addressBook.keySet().size();
 	}
 
-	/*
+	/**
 	 * Methode bekommt einen String übergeben und löscht den entsprechenden
 	 * Eintrag in dem Addressbuch.
 	 */
@@ -193,7 +197,7 @@ public class ObservableAddressBook {
 		addressBook.remove(key);
 	}
 
-	/*
+	/**
 	 * Methode bekommt einen String übergeben und testet über die search
 	 * Methode, ob ein Eintrag mit dem entsprechenden Schlüssel vorhanden ist
 	 * und gibt einen boolschen Wert (true ^ false) wieder.

@@ -11,23 +11,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import addressBook.ObservableContactDetails;
 
-
-
-
-public class testApp {
+/**
+ * Testet die Appointment Klasse (ohne JUNIT Test)
+ */
+public class AppointmentTestManual {
 	
 	
 	public static void main(String[] args) throws IllegalTimeException, ParseException, IOException {
 		
-		ObservableContactDetails cdet = new ObservableContactDetails("Pan", "Peter", "Test1", "Test2", "Test3");
-		
-		System.out.println(cdet.getFirstName());
-		System.out.println(cdet.genKey());
-		cdet.setFirstNameProp("Horst");
-		System.out.println(cdet.getFirstName());
-		System.out.println(cdet.genKey());
+//		ObservableContactDetails cdet = new ObservableContactDetails("Pan", "Peter", "Test1", "Test2", "Test3");
+//		
+//		System.out.println(cdet.getFirstName());
+//		System.out.println(cdet.genKey());
+//		cdet.setFirstNameProp("Horst");
+//		System.out.println(cdet.getFirstName());
+//		System.out.println(cdet.genKey());
 		
 		Appointment app = new Appointment("TEST", "11:00", "12:00", "12/04/2015", "12/04/2015", "Meeting");
 		

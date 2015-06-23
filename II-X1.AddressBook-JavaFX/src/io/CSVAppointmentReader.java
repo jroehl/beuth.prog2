@@ -10,6 +10,11 @@ import java.util.List;
 import appointment.Appointment;
 import appointment.IllegalTimeException;
 
+/**
+ * Liest aus einer csv Datei die Appointment Daten Zeile für Zeile ein.
+ * Erzeugt ein leeres Dummy Appointment, wenn aus den gegebenen Werten kein Appointment erzeugt werden kann
+ * Gibt eine Liste der Appointments wieder
+ */
 public class CSVAppointmentReader {
 
 	public static List<Appointment> readEntityList(String dateiname,
@@ -26,8 +31,8 @@ public class CSVAppointmentReader {
 			try {
 				target.add(new Appointment(line.split(splitter)));
 			} catch (IllegalTimeException e) {
+				target.add(new Appointment());
 				System.out.println(e);
-				e.printStackTrace();
 			}
 		}
 		inBuf.close();

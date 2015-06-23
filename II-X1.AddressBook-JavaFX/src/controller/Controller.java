@@ -87,7 +87,7 @@ public class Controller implements Initializable {
 	private TableColumn<ObservableContactDetails, String> phoneCol;
 	private TableColumn<ObservableContactDetails, String> mailCol;
 
-	/*
+	/**
 	 * Initialize Methode wird aufgerufen wenn das fxml Dokument geladen wird
 	 * Erstellt die TableView, den DefaultButton, den PrintDataButton. Setzt die
 	 * CellValueFactories und befüllt die Tabelle Initial mit allen vorhandenen
@@ -104,7 +104,7 @@ public class Controller implements Initializable {
 		initializeChangeListeners();
 	}
 
-	/*
+	/**
 	 * Methode um die ChangeListeners zu erstellen
 	 */
 	public void initializeChangeListeners() {
@@ -142,7 +142,7 @@ public class Controller implements Initializable {
 				.getMailProperty());
 	}
 
-	/*
+	/**
 	 * Methode wird TableColumn übergeben und setzt Cellfactories (um die Zelle
 	 * editierbar zu machen) und benutzt Lambda Ausdruck um dei Ausführung der
 	 * Änderung zu veranlassen
@@ -153,14 +153,14 @@ public class Controller implements Initializable {
 		column.setCellFactory(TextFieldTableCell.forTableColumn());
 	}
 
-	/*
+	/**
 	 * Zeigt alle Einträge (Values) des Adressbuches
 	 */
 	public void showAllEntries() {
 		table.setItems(addBook.getAllValues());
 	}
 
-	/*
+	/**
 	 * WICHTIG Create the Table View Erzeugt die Tabelle mit Anpassungen des
 	 * Layouts. Erzeugt einen Event-Handler (Lambda Ausdruck) um die Methode
 	 * editContact() bei klick auf die Tabellenspalte aufzurufen. Fügt alle
@@ -238,7 +238,7 @@ public class Controller implements Initializable {
 		leftAnch.getChildren().addAll(table);
 	}
 
-	/*
+	/**
 	 * Erzeugt den DefaultButton, dieser ruft den "Leer"-Konstruktor des
 	 * ObservableContactDetails auf. Hierdurch wird ein default-Eintrag
 	 * erstellt.
@@ -255,7 +255,7 @@ public class Controller implements Initializable {
 		rightAnch.getChildren().add(defaultEntry);
 	}
 
-	/*
+	/**
 	 * Erzeugt das Menü um den Inhalt des Adressbuches an die Konsole auszugeben
 	 */
 	public void createPrintDataMenu() {
@@ -275,7 +275,7 @@ public class Controller implements Initializable {
 		menuBar.getMenus().add(menu);
 	}
 
-	/*
+	/**
 	 * Fügt den jeweilig zugehörigen Text (firstName : firstNameTab) in die
 	 * Textfelder ein.
 	 */
@@ -293,7 +293,7 @@ public class Controller implements Initializable {
 				.getSelectedItem()));
 	}
 
-	/*
+	/**
 	 * Öffnet neues Fenster mit der ListView und füllt diese
 	 */
 	public void showKeysListView() {
@@ -308,7 +308,7 @@ public class Controller implements Initializable {
 		stage.showAndWait();
 	}
 
-	/*
+	/**
 	 * Öffnet neues Fenster mit einer editierbaren ListView
 	 */
 	public void showEditableListView() {
@@ -329,7 +329,7 @@ public class Controller implements Initializable {
 		stage.showAndWait();
 	}
 
-	/*
+	/**
 	 * Öffnet neues Fenster mit dem LineChart und füllt diesen
 	 */
 	public void showLineChart() {
@@ -357,7 +357,7 @@ public class Controller implements Initializable {
 		LineChartStage.showAndWait();
 	}
 
-	/*
+	/**
 	 * Testet durch eine if-else Schleife, ob die Eingabefelder leer sind. Wenn
 	 * alle Felder leer sind wird die Methode showtemp() mit den Werten für den
 	 * temporären Text, der Zeitspanne und des gewählten Buttons übergeben. Wenn
@@ -386,7 +386,7 @@ public class Controller implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Triggert AddressBook save().
 	 */
 	public void save() {
@@ -404,14 +404,14 @@ public class Controller implements Initializable {
 			System.out.println("Caught in the act!");
 		}
 	}
-	/*
+	/**
 	 * Schließt die Applikation.
 	 */
 	public void close() {
 		System.exit(0);
 	}
 
-	/*
+	/**
 	 * Triggert AddressBook save() und schließt die Applikation.
 	 */
 	public void saveAndExit() {
@@ -423,7 +423,7 @@ public class Controller implements Initializable {
 		System.exit(0);
 	}
 
-	/*
+	/**
 	 * Wird bei Eingabe im searchFld kontinuierlich ausgelöst Leitet den Text
 	 * aus dem searchFld zur Suche in den Values an AddressBook searchDetails()
 	 * weiter und füllt mit dem Ergebnis die Tabelle Aktualisiert den Text des
@@ -438,7 +438,7 @@ public class Controller implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Wird bei Eingabe im firstName & lastName Feld kontinuierlich ausgelöst
 	 * 
 	 * Setzt den Text für den addBtn und setzt den delBtn auf unsichtbar Leitet
@@ -495,7 +495,7 @@ public class Controller implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Leitet den Schlüssel des ausgewählten Kontakts zu AddressBook
 	 * removeContact() weiter. Setzt den delBtn unsichtbar, ruft switchButtons()
 	 * showAllEntries() und clearEntryField() auf.
@@ -513,7 +513,7 @@ public class Controller implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Ruft clearEntryField() und switchButtons() auf
 	 */
 	public void newEntry() {
@@ -521,7 +521,7 @@ public class Controller implements Initializable {
 		switchButtons();
 	}
 
-	/*
+	/**
 	 * Setzt den changeBtn und den newEntryBtn auf unsichtbar und den addBtn auf
 	 * sichtbar
 	 */
@@ -531,7 +531,7 @@ public class Controller implements Initializable {
 		addBtn.setVisible(true);
 	}
 
-	/*
+	/**
 	 * Setzt den delBtn auf sichtbar. Es wird dann die angewählte Reihe an die
 	 * setLayoutY() Methode übergeben, da diese den delBtn immer zugehörig zu
 	 * der Reihe verschiebt. Auch wird der TopAnchor immer neu bestimmt. Die
@@ -575,7 +575,7 @@ public class Controller implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Es wird ird ein neues ContactDetails Objekt mit den übergebenen Werten
 	 * aus den EIngabefeldern erstellt. Wenn der genKey() des neuen
 	 * ContactDetails dem durch die Methode editContact() erstellten String
@@ -605,7 +605,7 @@ public class Controller implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Methode löscht alle Einträge aus den Textfeldern.
 	 */
 	public void clearEntryField() {
@@ -616,7 +616,7 @@ public class Controller implements Initializable {
 		address.clear();
 	}
 
-	/*
+	/**
 	 * Benutzt die an die Methode übergebenen Werte: Erstellt eine
 	 * FadeTransition, setzt das Objekt auf sichtbar. Setzt Start und Endwert
 	 * der FadeTransition. Startet diese.
@@ -629,7 +629,7 @@ public class Controller implements Initializable {
 		ft.play();
 	}
 
-	/*
+	/**
 	 * Benutzt die an die Methode übergebenen Werte: Erstellt einen Tooltip,
 	 * setzt die Opacity, den Text und das zugehörige Objekt.
 	 */
@@ -640,7 +640,7 @@ public class Controller implements Initializable {
 		btn.setTooltip(tooltip);
 	}
 
-	/*
+	/**
 	 * Benutzt die an die Methode übergebenen Werte: Setzt den Text des
 	 * Objektes, erstellt eine Timeline und startet diese.
 	 */

@@ -10,7 +10,7 @@ import addressBook.ObservableAddressBook;
 
 public class AddressBookMain extends Application {
 
-	/*
+	/**
 	 * Erzeugt das JavaFX Hauptfenster.
 	 */
 

@@ -86,7 +86,7 @@ public class MyController implements Initializable {
 		showAllEntries();
 	}
 
-	/*
+	/**
 	 * WICHTIG Create the Table View Erzeugt die Tabelle mit Anpassungen des
 	 * Layouts. Erzeugt einen Event-Handler (Lambda Ausdruck) um die Methode
 	 * editContact() bei klick auf die Tabellenspalte aufzurufen. Fügt alle
@@ -116,7 +116,7 @@ public class MyController implements Initializable {
 		leftAnch.getChildren().addAll(table);
 	}
 
-	/*
+	/**
 	 * Fügt den jeweilig zugehörigen Text (firstName : firstNameTab) in die
 	 * Textfelder ein.
 	 */
@@ -134,7 +134,7 @@ public class MyController implements Initializable {
 				.getSelectedItem()));
 	}
 
-	/*
+	/**
 	 * WICHTIG Erstellt die CellValueFactory für die Tabellenspalte. Holt durch
 	 * einen Lambda Ausdruck die ObservableList aus ContactDetails und erzeugt
 	 * eine SimpleStringProperty. Setzt die an die Methode übergebene
@@ -157,7 +157,7 @@ public class MyController implements Initializable {
 		table.setItems(personData);
 	}
 
-	/*
+	/**
 	 * WICHTIG Öffnet neues Fenster mit der ListView und füllt diese. Es wird
 	 * das keyset des Adressbuchs geholt.
 	 */
@@ -173,7 +173,7 @@ public class MyController implements Initializable {
 		stage.showAndWait();
 	}
 
-	/*
+	/**
 	 * WICHTIG Öffnet neues Fenster mit dem LineChart und füllt diesen. Es wird
 	 * als Bezeichner des XYCharts (x-Achse) die Anfangsbuchstaben des Vor- und
 	 * Nachnamens verbunden. Als Werte der y-Achse wird die Länge der Keys
@@ -204,7 +204,7 @@ public class MyController implements Initializable {
 		LineChartStage.showAndWait();
 	}
 
-	/*
+	/**
 	 * Testet durch eine if-else Schleife, ob die Eingabefelder leer sind. Wenn
 	 * alle Felder leer sind wird die Methode showtemp() mit den Werten für den
 	 * temporären Text, der Zeitspanne und des gewählten Buttons übergeben. Wenn
@@ -234,7 +234,7 @@ public class MyController implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Triggert AddressBook save().
 	 */
 	public void save() {
@@ -245,14 +245,14 @@ public class MyController implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Schließt die Applikation.
 	 */
 	public void close() {
 		System.exit(0);
 	}
 
-	/*
+	/**
 	 * Triggert AddressBook save() und schließt die Applikation.
 	 */
 	public void saveAndExit() {
@@ -264,7 +264,7 @@ public class MyController implements Initializable {
 		System.exit(0);
 	}
 
-	/*
+	/**
 	 * Leitet ein "#" zur Suche in den Keys an AddressBook getDetails() weiter
 	 * und füllt mit dem Ergebnis die Tabelle Aktualisiert den Text des
 	 * allEntriesBtn.
@@ -275,7 +275,7 @@ public class MyController implements Initializable {
 				+ " entries");
 	}
 
-	/*
+	/**
 	 * Wird bei Eingabe im searchFld kontinuierlich ausgelöst Leitet den Text
 	 * aus dem searchFld zur Suche in den Values an AddressBook searchDetails()
 	 * weiter und füllt mit dem Ergebnis die Tabelle Aktualisiert den Text des
@@ -292,7 +292,7 @@ public class MyController implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Wird bei Eingabe im firstName & lastName Feld kontinuierlich ausgelöst
 	 * 
 	 * Setzt den Text für den addBtn und setzt den delBtn auf unsichtbar Leitet
@@ -354,7 +354,7 @@ public class MyController implements Initializable {
 				+ " entries");
 	}
 
-	/*
+	/**
 	 * Leitet den Schlüssel des ausgewählten Kontakts zu AddressBook
 	 * removeContact() weiter. Setzt den delBtn unsichtbar, ruft switchButtons()
 	 * showAllEntries() und clearEntryField() auf.
@@ -373,7 +373,7 @@ public class MyController implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Ruft clearEntryField() und switchButtons() auf
 	 */
 	public void newEntry() {
@@ -381,7 +381,7 @@ public class MyController implements Initializable {
 		switchButtons();
 	}
 
-	/*
+	/**
 	 * Setzt den changeBtn und den newEntryBtn auf unsichtbar und den addBtn auf
 	 * sichtbar
 	 */
@@ -391,7 +391,7 @@ public class MyController implements Initializable {
 		addBtn.setVisible(true);
 	}
 
-	/*
+	/**
 	 * Setzt den delBtn auf sichtbar. Es wird dann die angewählte Reihe an die
 	 * setLayoutY() Methode übergeben, da diese den delBtn immer zugehörig zu
 	 * der Reihe verschiebt. Auch wird der TopAnchor immer neu bestimmt. Die
@@ -430,7 +430,7 @@ public class MyController implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Es wird ird ein neues ContactDetails Objekt mit den übergebenen Werten
 	 * aus den EIngabefeldern erstellt. Wenn der genKey() des neuen
 	 * ContactDetails dem durch die Methode editContact() erstellten String
@@ -464,7 +464,7 @@ public class MyController implements Initializable {
 		}
 	}
 
-	/*
+	/**
 	 * Methode löscht alle Einträge aus den Textfeldern.
 	 */
 	public void clearEntryField() {
@@ -475,7 +475,7 @@ public class MyController implements Initializable {
 		address.clear();
 	}
 
-	/*
+	/**
 	 * Benutzt die an die Methode übergebenen Werte: Erstellt eine
 	 * FadeTransition, setzt das Objekt auf sichtbar. Setzt Start und Endwert
 	 * der FadeTransition. Startet diese.
@@ -488,7 +488,7 @@ public class MyController implements Initializable {
 		ft.play();
 	}
 
-	/*
+	/**
 	 * Benutzt die an die Methode übergebenen Werte: Erstellt einen Tooltip,
 	 * setzt die Opacity, den Text und das zugehörige Objekt.
 	 */
@@ -499,7 +499,7 @@ public class MyController implements Initializable {
 		btn.setTooltip(tooltip);
 	}
 
-	/*
+	/**
 	 * Benutzt die an die Methode übergebenen Werte: Setzt den Text des
 	 * Objektes, erstellt eine Timeline und startet diese.
 	 */

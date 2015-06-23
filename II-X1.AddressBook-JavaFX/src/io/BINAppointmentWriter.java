@@ -9,6 +9,9 @@ import java.util.List;
 
 import appointment.Appointment;
 
+/**
+ * Schreibt die übergebenen Daten aus einer Liste von Appointments in eine BIN Datei
+ */
 public class BINAppointmentWriter {
 	final static Charset ENCODING = StandardCharsets.UTF_8;
 

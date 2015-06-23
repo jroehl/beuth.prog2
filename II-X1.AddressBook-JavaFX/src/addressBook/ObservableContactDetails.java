@@ -11,6 +11,9 @@ public class ObservableContactDetails extends ContactDetails {
 	private SimpleStringProperty lastName, firstName, address, phone, mail;
 	ObservableList<SimpleStringProperty> olist = FXCollections.observableArrayList(lastName, firstName, address, phone, mail);
 	
+	/**
+	 * Konstruktor (leer) Erzeugt leeres Dummy ContactDetails Objekt
+	 */
 	public ObservableContactDetails() {
 		lastName = new SimpleStringProperty("-");
 		firstName = new SimpleStringProperty("-");
@@ -18,6 +21,9 @@ public class ObservableContactDetails extends ContactDetails {
 		phone = new SimpleStringProperty("-");
 		mail = new SimpleStringProperty("-");
 		
+		/**
+		 * ObjectBinding der Werte des ContactDetails Objekts um einen aktuellen Key zu generieren
+		 */
 		key = new ObjectBinding<String>() {
 			{ bind(lastName, firstName, address, phone, mail) ;}
 			protected String computeValue() {
@@ -26,6 +32,9 @@ public class ObservableContactDetails extends ContactDetails {
 		};
 	}
 	
+	/**
+	 * Konstruktor (aus Strings) Erzeugt ein ContactDetails Objekt
+	 */
 	public ObservableContactDetails(String lastNameIN, String firstNameIN,
 			String addressIN, String phoneIN, String mailIN)
 			throws IllegalArgumentException {
@@ -37,6 +46,9 @@ public class ObservableContactDetails extends ContactDetails {
 		phone = new SimpleStringProperty(phoneIN);
 		mail = new SimpleStringProperty(mailIN);
 		
+		/**
+		 * ObjectBinding der Werte des ContactDetails Objekts um einen aktuellen Key zu generieren
+		 */
 		key = new ObjectBinding<String>() {
 			{ bind(lastName, firstName, address, phone, mail) ;}
 			protected String computeValue() {
@@ -45,6 +57,9 @@ public class ObservableContactDetails extends ContactDetails {
 		};
 	}
 
+	/**
+	 * Konstruktor (aus Liste mit Strings) Erzeugt ein ContactDetails Objekt aus den aus der CSV Datei gelesenen Werten
+	 */
 	public ObservableContactDetails(String[] split) {
 		
 		lastName = new SimpleStringProperty(split[0]);
@@ -60,7 +75,10 @@ public class ObservableContactDetails extends ContactDetails {
 			}
 		};
 	}
-
+	
+	/**
+	 * Getter und Setter
+	 */
 	public SimpleStringProperty getLastNameProperty() {
 		return lastName;
 	}

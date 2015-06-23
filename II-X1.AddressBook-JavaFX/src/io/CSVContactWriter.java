@@ -11,6 +11,9 @@ import java.util.List;
 
 import addressBook.ObservableContactDetails;
 
+/**
+ * Schreibt die übergebenen Daten aus einer Liste von Kontakten in eine CSV Datei
+ */
 public class CSVContactWriter {
 	final static Charset ENCODING = StandardCharsets.UTF_8;
 

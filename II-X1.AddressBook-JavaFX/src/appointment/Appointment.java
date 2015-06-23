@@ -8,6 +8,14 @@ import java.time.temporal.ChronoUnit;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * erstellt durch unterschiedliche Konstruktoren ein Appointment aus verschiedenen SimpleStringProperties
+ */
+
+
+/**
+ * Standardkonstruktor (leer) - erzeugt ein dummy Appointment
+ */
 public class Appointment {
 	
 	private SimpleStringProperty dateContent, category;
@@ -23,6 +31,10 @@ public class Appointment {
 		endDate = new SimpleStringProperty("01/01/1971");
 		endTime = new SimpleStringProperty("00:01");
 		
+		/**
+		 * ObjectBinding startDate an startTime
+		 * Es wird ein LocalDateTime Objekt erzeugt.
+		 */
 		startDateTime = new ObjectBinding<LocalDateTime>() {
 			{ bind(startDate, startTime) ;}
 			protected LocalDateTime computeValue() {
@@ -32,6 +44,10 @@ public class Appointment {
 			}
 		};
 		
+		/**
+		 * ObjectBinding endDate an endTime
+		 * Es wird ein LocalDateTime Objekt erzeugt.
+		 */
 		endDateTime = new ObjectBinding<LocalDateTime>() {
 			{ bind(endDate, endTime) ;}
 			protected LocalDateTime computeValue() {
@@ -40,7 +56,10 @@ public class Appointment {
 				return timeDateTime;
 			}
 		};
-		
+		/**
+		 * ObjectBinding startDateTime an endDateTime
+		 * Es wird die Dauer zwischen den beiden Terminen als Long value generiert.
+		 */
 		duration = new ObjectBinding<Long>() {
 			{ bind(startDateTime, endDateTime) ;}
 			protected Long computeValue() {
@@ -50,6 +69,9 @@ public class Appointment {
 		
 	}
 
+	/**
+	 * Konstruktor (für Strings) - erzeugt ein Appointment
+	 */
 	public Appointment(String dateContentIN,String startTimeIN,String endTimeIN, String startDateIN, String endDateIN, String categoryIN) throws IllegalTimeException, ParseException {
 		dateContent = new SimpleStringProperty(dateContentIN);
 		category = new SimpleStringProperty(categoryIN);
@@ -58,6 +80,10 @@ public class Appointment {
 		endDate = new SimpleStringProperty(endDateIN);
 		endTime = new SimpleStringProperty(endTimeIN);
 		
+		/**
+		 * ObjectBinding startDate an startTime
+		 * Es wird ein LocalDateTime Objekt erzeugt.
+		 */
 		startDateTime = new ObjectBinding<LocalDateTime>() {
 			{ bind(startDate, startTime) ;}
 			protected LocalDateTime computeValue() {
@@ -67,6 +93,10 @@ public class Appointment {
 			}
 		};
 		
+		/**
+		 * ObjectBinding endDate an endTime
+		 * Es wird ein LocalDateTime Objekt erzeugt.
+		 */
 		endDateTime = new ObjectBinding<LocalDateTime>() {
 			{ bind(endDate, endTime) ;}
 			protected LocalDateTime computeValue() {
@@ -76,6 +106,10 @@ public class Appointment {
 			}
 		};
 		
+		/**
+		 * ObjectBinding startDateTime an endDateTime
+		 * Es wird die Dauer zwischen den beiden Terminen als Long value generiert.
+		 */
 		duration = new ObjectBinding<Long>() {
 			{ bind(startDateTime, endDateTime) ;}
 			protected Long computeValue() {
@@ -83,11 +117,18 @@ public class Appointment {
 			}
 		};
 		
+		/**
+		 * Wirft IllegalTimeException, wenn der Startzeitpunkt vor dem Endzeitpunkt liegt
+		 */
 		if (startDateTime.get().isAfter(endDateTime.get())) {
 			throw new IllegalTimeException();
     	}
 	}
 	
+	/**
+	 * Konstruktor (für Liste von String) 
+	 * - erzeugt ein Appointment aus den durch die CSV/BINAppointmentReader Klasse übergebenen Werte
+	 */
 	public Appointment(String[] split) throws IllegalTimeException {
 		this.
 		dateContent = new SimpleStringProperty(split[0]);
@@ -128,7 +169,9 @@ public class Appointment {
 	}
 
 	
-
+	/**
+	 * Getter und Setter (jeweils für String und Property)
+	 */
 	public SimpleStringProperty getDateContentProperty() {
 		return dateContent;
 	}
@@ -157,6 +200,9 @@ public class Appointment {
 		return startDateTime;
 	}
 	
+	/**
+	 * DateTimeFormatter formatiert das LocalDateTimeObjekt zu einem String nach dem vorgegeben Muster
+	 */
 	public String getStartDateTime() {
 		return startDateTime.get().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
 	}
@@ -228,7 +274,10 @@ public class Appointment {
 			throw new IllegalTimeException();
     	}
 	}
-
+	
+	/**
+	 * Gibt die, aus dem übergebenen Long Wert in Sekunden, als Minuten, Stunden und Tage (in einem Array) wieder
+	 */
 	public Long[] getDurationSplit() {
 		
 		Long[] retArr = new Long[3];
