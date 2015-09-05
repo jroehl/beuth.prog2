@@ -30,9 +30,10 @@ public class AddressBook implements AddressBookInterfaceNew {
 		Properties properties = new Properties();
 		try {
 			// /Users/jroehl/Dropbox/Programmierung/GIT/Beuth_Programmieren_2/II-X1.AddressBook-JavaFX/data.properties
+			// /Users/bodowissemann/Documents/GIT/AddressBook/II-X1.AddressBook-JavaFX
 			properties
 					.load(new FileInputStream(
-							"/Users/jroehl/Dropbox/Programmierung/GIT/Beuth_Programmieren_2/II-X1.AddressBook-JavaFX/data.properties"));
+							"/Users/bodowissemann/Documents/GIT/AddressBook/II-X1.AddressBook-JavaFX/data.properties"));
 		} catch (IOException e) {
 			System.out.println("File not found!!");
 			System.exit(0);
@@ -73,7 +74,6 @@ public class AddressBook implements AddressBookInterfaceNew {
 		}
 	}
 
-
 	/**
 	 * Methode bekommt ein ContactDetails Objekt übergeben. Es wird mit dem
 	 * generierten genKey() String als Key und dem Objet ein Addressbuch
@@ -104,10 +104,10 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * Entweder wird bei keinem gefundenen Key null ausgegeben oder aber alle
 	 * gefundenen Kontakte in der ObservableList gespeichert.
 	 */
-	
+
 	/**
-	 *  Diese Methode sucht in den Keys, ob der SuchString vorkommt und
-	 *  speichert dann das Ergebnis in der ObservableList
+	 * Diese Methode sucht in den Keys, ob der SuchString vorkommt und speichert
+	 * dann das Ergebnis in der ObservableList
 	 */
 	@Override
 	public ObservableList<ContactDetails> getDetails(String key)
@@ -129,8 +129,8 @@ public class AddressBook implements AddressBookInterfaceNew {
 	}
 
 	/**
-	 *  Diese Methode sucht in den Values, ob der SuchString vorkommt und
-	 *   speichert dann das Ergebnis in der ObservableList
+	 * Diese Methode sucht in den Values, ob der SuchString vorkommt und
+	 * speichert dann das Ergebnis in der ObservableList
 	 */
 	@Override
 	public ObservableList<ContactDetails> search(String keyPrefix)
@@ -179,7 +179,7 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * Methode bekommt einen String übergeben und löscht den entsprechenden
 	 * Eintrag in dem Addressbuch.
 	 */
-	
+
 	@Override
 	public void removeContact(String key) throws IllegalArgumentException {
 		if (key == null) {
@@ -193,7 +193,7 @@ public class AddressBook implements AddressBookInterfaceNew {
 	 * Methode, ob ein Eintrag mit dem entsprechenden Schlüssel vorhanden ist
 	 * und gibt einen boolschen Wert (true ^ false) wieder.
 	 */
-	
+
 	@Override
 	public boolean keyInUse(String key) throws IllegalArgumentException {
 		if (key == null) {

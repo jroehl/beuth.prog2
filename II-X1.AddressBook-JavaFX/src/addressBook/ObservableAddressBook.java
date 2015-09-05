@@ -18,9 +18,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 public class ObservableAddressBook {
-
+	// observable Map mit String-key und ObservableContactDetails
 	private ObservableMap<String, ObservableContactDetails> addressBook;
-	
+
 	/**
 	 * In dem Standardkonstruktor wird eine neue TreeMap erstellt. Die
 	 * gespeicherten Werte werden aus einer csv-Datei gelesen. Mittels einer
@@ -30,12 +30,13 @@ public class ObservableAddressBook {
 	 * benutzt um ein neues ContactDetails Objekt zu erzeugen und in die TreeMap
 	 * einzufügen.
 	 */
-	
+
 	public ObservableAddressBook() {
 		addressBook = FXCollections.observableHashMap();
-		
-		List<ObservableContactDetails> list = CSVContactsReader.readEntityList("contacts.csv", ":");
-		
+
+		List<ObservableContactDetails> list = CSVContactsReader.readEntityList(
+				"contacts.csv", ":");
+
 		for (ObservableContactDetails cdet : list) {
 			try {
 				addressBook.put(cdet.getKey(), cdet);
@@ -44,40 +45,40 @@ public class ObservableAddressBook {
 			}
 		}
 	}
-//		Properties properties = new Properties();
-//		try {
-//			properties
-//					.load(new FileInputStream(
-//							"data.properties"));
-//		} catch (IOException e) {
-//			System.out.println("File not found!!");
-//			System.exit(0);
-//		}
-//		for (String key : properties.stringPropertyNames()) {
-//			String[] tempList = new String[5];
-//			int n = 0;
-//			for (int i = 0; i < properties.get(key).toString().split("§").length; i++) {
-//				tempList[n] = properties.get(key).toString().split("§")[n];
-//				n++;
-//			}
-//			ObservableContactDetails tempDet;
-//			try {
-//				tempDet = new ObservableContactDetails(tempList[0], tempList[1],
-//						tempList[2], tempList[3], tempList[4]);
-//				addressBook.put(tempDet.getKey(), tempDet);
-//			} catch (IllegalArgumentException e) {
-//				System.out.println("No valid entry!");
-//			}
-		
-	
+	// Properties properties = new Properties();
+	// try {
+	// properties
+	// .load(new FileInputStream(
+	// "data.properties"));
+	// } catch (IOException e) {
+	// System.out.println("File not found!!");
+	// System.exit(0);
+	// }
+	// for (String key : properties.stringPropertyNames()) {
+	// String[] tempList = new String[5];
+	// int n = 0;
+	// for (int i = 0; i < properties.get(key).toString().split("§").length;
+	// i++) {
+	// tempList[n] = properties.get(key).toString().split("§")[n];
+	// n++;
+	// }
+	// ObservableContactDetails tempDet;
+	// try {
+	// tempDet = new ObservableContactDetails(tempList[0], tempList[1],
+	// tempList[2], tempList[3], tempList[4]);
+	// addressBook.put(tempDet.getKey(), tempDet);
+	// } catch (IllegalArgumentException e) {
+	// System.out.println("No valid entry!");
+	// }
+
 	/***
 	 * Die ObservableMap Hashmap addressbook wird wiedergegeben
 	 */
 	public ObservableMap<String, ObservableContactDetails> getOHashMap() {
 		return addressBook;
-		
+
 	}
-	
+
 	/**
 	 * Eine ObservableList mit allen Values der OMap wird wiedergegeben
 	 */
@@ -87,14 +88,15 @@ public class ObservableAddressBook {
 		cdet.addAll(addressBook.values());
 		return cdet;
 	}
-	
-	
+
 	/**
 	 * Save Methode, schreibt die HashMap in eine properties Datei.
 	 */
 	public void save() throws IOException {
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		Properties properties = new Properties();
-		for (Map.Entry<String, ObservableContactDetails> entry : addressBook.entrySet()) {
+		for (Map.Entry<String, ObservableContactDetails> entry : addressBook
+				.entrySet()) {
 			properties.put(entry.getKey(), entry.getValue().getSaveContent());
 		}
 		try {
@@ -119,14 +121,15 @@ public class ObservableAddressBook {
 			System.out.println("!File not found!");
 		}
 	}
-	
+
 	/**
 	 * Methode bekommt ein ContactDetails Objekt übergeben. Es wird mit dem
 	 * generierten getKey() String als Key und dem Objet ein Addressbuch
 	 * (TreeMap) Eintrag erzeugt. Im Konstruktor wird schon überprüft, ob eine
 	 * IllegalArgumentsException geworfen wird
 	 */
-	public void add(ObservableContactDetails details) throws IllegalArgumentException {
+	public void add(ObservableContactDetails details)
+			throws IllegalArgumentException {
 		if (details == null)
 			throw new IllegalArgumentException();
 		try {
@@ -153,7 +156,8 @@ public class ObservableAddressBook {
 		}
 		ObservableList<ObservableContactDetails> cdet = FXCollections
 				.observableArrayList();
-		for (Entry<String, ObservableContactDetails> entry : addressBook.entrySet()) {
+		for (Entry<String, ObservableContactDetails> entry : addressBook
+				.entrySet()) {
 			if (entry.getValue().getContent().contains(keyPrefix)) {
 				cdet.add(addressBook.get(entry.getKey()));
 			}
@@ -169,13 +173,14 @@ public class ObservableAddressBook {
 	 * wird der entsprechende Eintrag des oldKeys gelöscht um dann aus dem
 	 * ContactDetails Objekt einen neuen Eintrag zu erzeugen.
 	 */
-	public void changeContact(ObservableContactDetails details, String removeThis)
-			throws IllegalArgumentException {
+	public void changeContact(ObservableContactDetails details,
+			String removeThis) throws IllegalArgumentException {
 		if (removeThis == null || details == null) {
 			throw new IllegalArgumentException();
 		}
-		addressBook.put(details.getKey(), details);
 		addressBook.remove(removeThis);
+		addressBook.put(details.getKey(), details);
+
 	}
 
 	/**
@@ -215,5 +220,5 @@ public class ObservableAddressBook {
 	public Set<String> getKeys() {
 		return addressBook.keySet();
 	}
-	
+
 }

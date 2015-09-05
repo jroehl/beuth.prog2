@@ -110,11 +110,23 @@ public class Controller implements Initializable {
 	public void initializeChangeListeners() {
 
 		// ChangeListeners für die Textfelder
-		firstName.selectionProperty().addListener((observable, oldValue, newValue) -> searchExistingContact(firstName));
-		address.selectionProperty().addListener((observable, oldValue, newValue) -> searchExistingContact(lastName));
-		phone.selectionProperty().addListener((observable, oldValue, newValue) -> searchExistingContact(phone));
-		mail.selectionProperty().addListener((observable, oldValue, newValue) -> searchExistingContact(mail));
-		searchFld.selectionProperty().addListener((observable, oldValue, newValue) -> searchExistingContact(searchFld));
+		firstName
+				.selectionProperty()
+				.addListener(
+						(observable, oldValue, newValue) -> searchExistingContact(firstName));
+		address.selectionProperty()
+				.addListener(
+						(observable, oldValue, newValue) -> searchExistingContact(lastName));
+		phone.selectionProperty()
+				.addListener(
+						(observable, oldValue, newValue) -> searchExistingContact(phone));
+		mail.selectionProperty()
+				.addListener(
+						(observable, oldValue, newValue) -> searchExistingContact(mail));
+		searchFld
+				.selectionProperty()
+				.addListener(
+						(observable, oldValue, newValue) -> searchExistingContact(searchFld));
 		// ChangeListener für die HashMap
 		addBook.getOHashMap().addListener(
 				new MapChangeListener<String, ObservableContactDetails>() {
@@ -457,33 +469,35 @@ public class Controller implements Initializable {
 			if (addBook.search(txtFld.getText().toLowerCase()) != null) {
 				table.setItems(addBook.search(txtFld.getText().toLowerCase()));
 				// Probleme andere Rechner
-//				addBtn.setOnAction((event) -> {
-//					Alert alert = new Alert(AlertType.WARNING);
-//					alert.setTitle("Alert!");
-//					alert.setHeaderText("Entry does probably already exist or is not rational -\n do you want to continue anyway?");
-//					ButtonType yesBtn = new ButtonType("Yes");
-//					ButtonType noBtn = new ButtonType("No");
-//					ButtonType cancelBtn = new ButtonType("Cancel",
-//							ButtonData.CANCEL_CLOSE);
-//					alert.getButtonTypes().setAll(yesBtn, noBtn, cancelBtn);
-//					Optional<ButtonType> result = alert.showAndWait();
-//					if (result.get() == yesBtn) {
-//						addBtn.setText("Add");
-//						addBtn.setOnAction((event2) -> {
-//							addDetails();
-//						});
-//						addDetails();
-//					} else if (result.get() == noBtn) {
-//						addBtn.setText("Add");
-//						clearEntryField();
-//						addBtn.setOnAction((event2) -> {
-//							addDetails();
-//						});
-//					} else {
-//						addBtn.setText("Add");
-//						// ... user chose CANCEL or closed the dialog
-//					}
-//				});
+				// addBtn.setOnAction((event) -> {
+				// javafx.scene.control.Alert alert = new
+				// javafx.scene.control.Alert(
+				// javafx.scene.control.AlertType.WARNING);
+				// alert.setTitle("Alert!");
+				// alert.setHeaderText("Entry does probably already exist or is not rational -\n do you want to continue anyway?");
+				// ButtonType yesBtn = new ButtonType("Yes");
+				// ButtonType noBtn = new ButtonType("No");
+				// ButtonType cancelBtn = new ButtonType("Cancel",
+				// ButtonData.CANCEL_CLOSE);
+				// alert.getButtonTypes().setAll(yesBtn, noBtn, cancelBtn);
+				// Optional<ButtonType> result = alert.showAndWait();
+				// if (result.get() == yesBtn) {
+				// addBtn.setText("Add");
+				// addBtn.setOnAction((event2) -> {
+				// addDetails();
+				// });
+				// addDetails();
+				// } else if (result.get() == noBtn) {
+				// addBtn.setText("Add");
+				// clearEntryField();
+				// addBtn.setOnAction((event2) -> {
+				// addDetails();
+				// });
+				// } else {
+				// addBtn.setText("Add");
+				// // ... user chose CANCEL or closed the dialog
+				// }
+				// });
 			} else {
 				table.setItems(addBook.search(txtFld.getText().toLowerCase()));
 				addBtn.setOnAction((event) -> {
@@ -494,7 +508,6 @@ public class Controller implements Initializable {
 			System.out.println("String is null");
 		}
 	}
-
 	/**
 	 * Leitet den Schlüssel des ausgewählten Kontakts zu AddressBook
 	 * removeContact() weiter. Setzt den delBtn unsichtbar, ruft switchButtons()
