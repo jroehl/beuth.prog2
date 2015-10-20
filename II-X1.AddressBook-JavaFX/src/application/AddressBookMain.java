@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import addressBook.ObservableAddressBook;
 
 public class AddressBookMain extends Application {
 
@@ -13,7 +14,7 @@ public class AddressBookMain extends Application {
 	 * Erzeugt das JavaFX Hauptfenster.
 	 */
 
-//	private ObservableAddressBook addBook = new ObservableAddressBook();
+	private ObservableAddressBook addBook = new ObservableAddressBook();
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -37,9 +38,9 @@ public class AddressBookMain extends Application {
 		
 	}
 
-//	public ObservableAddressBook getPersonData() {
-//        return addBook;
-//    }
+	public ObservableAddressBook getPersonData() {
+        return addBook;
+    }
 	
 	public static void main(String[] args) {
 		launch(args);

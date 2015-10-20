@@ -1,6 +1,8 @@
 package addressBook;
 
-import java.io.FileInputStream;
+import io.CSVContactWriter;
+import io.CSVContactsReader;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +13,6 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
-import io.CSVContactWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -33,42 +34,40 @@ public class ObservableAddressBook {
 	public ObservableAddressBook() {
 		addressBook = FXCollections.observableHashMap();
 		
-//		List<ObservableContactDetails> list = CSVContactsReader.readEntityList("contacts.csv", ":");
-//		
-//		for (ObservableContactDetails cdet : list) {
-//			try {
-//				addressBook.put(cdet.getKey(), cdet);
-//			} catch (IllegalArgumentException e) {
-//				System.out.println("No valid entry!");
-//			}
-//		}
-//	}
-		Properties properties = new Properties();
-		try {
-			properties
-					.load(new FileInputStream(
-							"data.properties"));
-		} catch (IOException e) {
-			System.out.println("File not found!!");
-			System.exit(0);
-		}
-		for (String key : properties.stringPropertyNames()) {
-			String[] tempList = new String[5];
-			int n = 0;
-			for (int i = 0; i < properties.get(key).toString().split("§").length; i++) {
-				tempList[n] = properties.get(key).toString().split("§")[n];
-				n++;
-			}
-			ObservableContactDetails tempDet;
+		List<ObservableContactDetails> list = CSVContactsReader.readEntityList("contacts.csv", ":");
+		
+		for (ObservableContactDetails cdet : list) {
 			try {
-				tempDet = new ObservableContactDetails(tempList[0], tempList[1],
-						tempList[2], tempList[3], tempList[4]);
-				addressBook.put(tempDet.getKey(), tempDet);
+				addressBook.put(cdet.getKey(), cdet);
 			} catch (IllegalArgumentException e) {
 				System.out.println("No valid entry!");
 			}
 		}
 	}
+//		Properties properties = new Properties();
+//		try {
+//			properties
+//					.load(new FileInputStream(
+//							"data.properties"));
+//		} catch (IOException e) {
+//			System.out.println("File not found!!");
+//			System.exit(0);
+//		}
+//		for (String key : properties.stringPropertyNames()) {
+//			String[] tempList = new String[5];
+//			int n = 0;
+//			for (int i = 0; i < properties.get(key).toString().split("§").length; i++) {
+//				tempList[n] = properties.get(key).toString().split("§")[n];
+//				n++;
+//			}
+//			ObservableContactDetails tempDet;
+//			try {
+//				tempDet = new ObservableContactDetails(tempList[0], tempList[1],
+//						tempList[2], tempList[3], tempList[4]);
+//				addressBook.put(tempDet.getKey(), tempDet);
+//			} catch (IllegalArgumentException e) {
+//				System.out.println("No valid entry!");
+//			}
 		
 	
 	/***
@@ -147,7 +146,7 @@ public class ObservableAddressBook {
 
 	// Diese Methode sucht in den Values, ob der SuchString vorkommt und
 	// speichert dann das Ergebnis in der ObservableList
-	public ObservableList<ObservableContactDetails> search(String keyPrefix) 
+	public ObservableList<ObservableContactDetails> search(String keyPrefix)
 			throws IllegalArgumentException {
 		if (keyPrefix == null) {
 			throw new IllegalArgumentException();
