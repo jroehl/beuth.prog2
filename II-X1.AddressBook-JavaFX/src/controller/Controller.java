@@ -2,9 +2,12 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import addressBook.ObservableAddressBook;
+import addressBook.ObservableContactDetails;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +23,11 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
@@ -35,8 +42,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import addressBook.ObservableAddressBook;
-import addressBook.ObservableContactDetails;
 
 public class Controller implements Initializable {
 
@@ -80,7 +85,7 @@ public class Controller implements Initializable {
 	ObservableAddressBook addBook = new ObservableAddressBook();
 	String tempKey = null;
 
-	private TableView<ObservableContactDetails> table;
+	TableView<ObservableContactDetails> table;
 	private TableColumn<ObservableContactDetails, String> firstNameCol;
 	private TableColumn<ObservableContactDetails, String> lastNameCol;
 	private TableColumn<ObservableContactDetails, String> addressCol;
@@ -456,34 +461,34 @@ public class Controller implements Initializable {
 		try {
 			if (addBook.search(txtFld.getText().toLowerCase()) != null) {
 				table.setItems(addBook.search(txtFld.getText().toLowerCase()));
-				// Probleme andere Rechner
-//				addBtn.setOnAction((event) -> {
-//					Alert alert = new Alert(AlertType.WARNING);
-//					alert.setTitle("Alert!");
-//					alert.setHeaderText("Entry does probably already exist or is not rational -\n do you want to continue anyway?");
-//					ButtonType yesBtn = new ButtonType("Yes");
-//					ButtonType noBtn = new ButtonType("No");
-//					ButtonType cancelBtn = new ButtonType("Cancel",
-//							ButtonData.CANCEL_CLOSE);
-//					alert.getButtonTypes().setAll(yesBtn, noBtn, cancelBtn);
-//					Optional<ButtonType> result = alert.showAndWait();
-//					if (result.get() == yesBtn) {
-//						addBtn.setText("Add");
-//						addBtn.setOnAction((event2) -> {
-//							addDetails();
-//						});
-//						addDetails();
-//					} else if (result.get() == noBtn) {
-//						addBtn.setText("Add");
-//						clearEntryField();
-//						addBtn.setOnAction((event2) -> {
-//							addDetails();
-//						});
-//					} else {
-//						addBtn.setText("Add");
-//						// ... user chose CANCEL or closed the dialog
-//					}
-//				});
+//				 Probleme andere Rechner
+				addBtn.setOnAction((event) -> {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Alert!");
+					alert.setHeaderText("Entry does probably already exist or is not rational -\n do you want to continue anyway?");
+					ButtonType yesBtn = new ButtonType("Yes");
+					ButtonType noBtn = new ButtonType("No");
+					ButtonType cancelBtn = new ButtonType("Cancel",
+							ButtonData.CANCEL_CLOSE);
+					alert.getButtonTypes().setAll(yesBtn, noBtn, cancelBtn);
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == yesBtn) {
+						addBtn.setText("Add");
+						addBtn.setOnAction((event2) -> {
+							addDetails();
+						});
+						addDetails();
+					} else if (result.get() == noBtn) {
+						addBtn.setText("Add");
+						clearEntryField();
+						addBtn.setOnAction((event2) -> {
+							addDetails();
+						});
+					} else {
+						addBtn.setText("Add");
+						// ... user chose CANCEL or closed the dialog
+					}
+				});
 			} else {
 				table.setItems(addBook.search(txtFld.getText().toLowerCase()));
 				addBtn.setOnAction((event) -> {
@@ -492,6 +497,9 @@ public class Controller implements Initializable {
 			}
 		} catch (IllegalArgumentException e) {
 			System.out.println("String is null");
+		} catch (Exception e) {
+			System.out.println("FEHLER");
+			System.out.println(e);
 		}
 	}
 
